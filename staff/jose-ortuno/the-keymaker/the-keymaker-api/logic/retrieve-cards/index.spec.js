@@ -2,8 +2,8 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const retrieveCards = require('.')
-const { database, models: { User, Card } } = require('my-stuff-data')
-const { random: {number} } = require('my-stuff-utils')
+const { database, models: { User, Card } } = require('the-keymaker-data')
+const { random: {number} } = require('the-keymaker-utils')
 
 const { env: { DB_URL_TEST } } = process
 

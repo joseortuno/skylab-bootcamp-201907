@@ -1,4 +1,4 @@
-const { models: { User, Vehicle } } = require('my-stuff-data')
+const { models: { User, Vehicle } } = require('the-keymaker-data')
 
 /**
  * Registers a card associated to a user.

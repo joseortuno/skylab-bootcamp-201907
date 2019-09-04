@@ -1,5 +1,5 @@
-const { models: { User, Card } } = require('my-stuff-data')
-const { validate } = require('my-stuff-utils')
+const { models: { User, Card } } = require('the-keymaker-data')
+const { validate } = require('the-keymaker-utils')
 
 /**
  * Registers a card associated to a user.

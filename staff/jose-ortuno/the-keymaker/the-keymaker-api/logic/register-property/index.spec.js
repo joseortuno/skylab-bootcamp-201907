@@ -2,8 +2,8 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const registerProperty = require('.')
-const { database, models: { User, Property } } = require('my-stuff-data')
-const { random: { number } } = require('my-stuff-utils')
+const { database, models: { User, Property } } = require('the-keymaker-data')
+const { random: { number } } = require('the-keymaker-utils')
 const { random } = Math
 
 const { env: { DB_URL_TEST } } = process

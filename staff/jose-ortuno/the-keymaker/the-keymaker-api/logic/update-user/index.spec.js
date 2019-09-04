@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const updateUser = require('.')
-const { database, models: { User } } = require('my-stuff-data')
+const { database, models: { User } } = require('the-keymaker-data')
 
 const { env: { DB_URL_TEST }} = process
 

@@ -2,8 +2,8 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const registerVehicle = require('.')
-const { database, models: { User, Vehicle } } = require('my-stuff-data')
-const { random: { number, boolean, value } } = require('my-stuff-utils')
+const { database, models: { User, Vehicle } } = require('the-keymaker-data')
+const { random: { number, boolean, value } } = require('the-keymaker-utils')
 const { random } = Math
 
 const { env: { DB_URL_TEST } } = process

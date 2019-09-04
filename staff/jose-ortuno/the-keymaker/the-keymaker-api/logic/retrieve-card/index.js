@@ -1,4 +1,4 @@
-const { models: { User } } = require('my-stuff-data')
+const { models: { User } } = require('the-keymaker-data')
 
 /**
  * Retrieves a card by its user id and itself id.

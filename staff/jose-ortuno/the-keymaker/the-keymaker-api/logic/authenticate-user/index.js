@@ -1,5 +1,5 @@
-const { models: { User } } = require('my-stuff-data')
-const { validate } = require('my-stuff-utils')
+const { models: { User } } = require('the-keymaker-data')
+const { validate } = require('the-keymaker-utils')
 
 /**
  * Authenticates a user by its credentials.

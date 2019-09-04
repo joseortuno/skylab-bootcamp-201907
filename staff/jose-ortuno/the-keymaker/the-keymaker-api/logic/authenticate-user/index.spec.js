@@ -2,11 +2,11 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const authenticateUser = require('.')
-const { database, models: { User } } = require('my-stuff-data')
+const { database, models: { User } } = require('the-keymaker-data')
 
 const { env: { DB_URL_TEST }} = process
 
-describe('logic - authenticate user', () => {
+describe.only('logic - authenticate user', () => {
     before(() => database.connect(DB_URL_TEST))
 
     let name, surname, email, password, id

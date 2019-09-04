@@ -1,4 +1,4 @@
-const { models: { User } } = require('my-stuff-data')
+const { models: { User } } = require('the-keymaker-data')
 
 /**
  * Retrieves a user by its id.
