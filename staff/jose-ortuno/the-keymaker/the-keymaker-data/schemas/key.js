@@ -28,6 +28,8 @@ module.exports = new Schema({
     },
     status: {
         type: String,
+        enum: ['waiting', 'visited', 'expired', 'cancelled'],
+        default: 'waiting',
         required: true
     },
     alias_guest: {
