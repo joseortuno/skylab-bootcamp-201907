@@ -1,6 +1,6 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
-module.exports = new Schema ({
+module.exports = new Schema({
     logo: {
         type: String,
         required: false
@@ -10,8 +10,15 @@ module.exports = new Schema ({
         required: true
     },
     location: {
-        type: String,
-        required: true
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
     },
     img: [
         {
