@@ -20,12 +20,6 @@ module.exports = new Schema({
             required: false
         }
     },
-    img: [
-        {
-            type: String,
-            required: true
-        }
-    ],
     status: {
         type: Boolean,
         required: true
