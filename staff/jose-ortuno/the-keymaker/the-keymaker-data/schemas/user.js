@@ -1,9 +1,8 @@
 const { Schema } = require('mongoose')
 
 module.exports = new Schema({
-    logo: { 
-        data: Buffer, 
-        contentType: String, 
+    logo: {
+        path: String,
         required: false 
     },
     alias: {
