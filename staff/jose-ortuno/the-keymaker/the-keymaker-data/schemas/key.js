@@ -19,7 +19,7 @@ module.exports = new Schema({
     },
     used_at: {
         type: Date,
-        required: true
+        required: false
     },
     canceled: {
         type: Date,
