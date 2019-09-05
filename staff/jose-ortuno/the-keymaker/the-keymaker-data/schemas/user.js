@@ -1,6 +1,11 @@
 const { Schema } = require('mongoose')
 
 module.exports = new Schema({
+    logo: { 
+        data: Buffer, 
+        contentType: String, 
+        required: false 
+    },
     alias: {
         type: String,
         required: true
