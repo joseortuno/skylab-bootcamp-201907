@@ -2,8 +2,7 @@ const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
     logo: { 
-        data: Buffer, 
-        contentType: String, 
+        path: String,
         required: false 
     },
     alias: {

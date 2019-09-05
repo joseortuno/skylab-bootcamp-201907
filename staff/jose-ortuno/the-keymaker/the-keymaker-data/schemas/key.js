@@ -1,21 +1,21 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
-module.exports = new Schema ({
+module.exports = new Schema({
     created_at: {
         type: Date,
         required: true,
     },
     valid_from: {
         type: Date,
-        required: true,
+        required: false,
     },
     valid_until: {
         type: Date,
-        required: true,
+        required: false,
     },
     token: {
         type: String,
-        required: true,
+        required: false,
     },
     used_at: {
         type: Date,
@@ -23,10 +23,13 @@ module.exports = new Schema ({
     },
     canceled: {
         type: Date,
-        required: true,
+        default: false,
+        required: false,
     },
     status: {
         type: String,
+        enum: [waiting, visited, expired, cancelled],
+        default: waiting,
         required: true
     },
     alias_guest: {
@@ -44,8 +47,5 @@ module.exports = new Schema ({
     ],
     user: [
         { type: ObjectId, ref: 'User' }
-    ],
-    invitation: [
-        { type: ObjectId, ref: 'Invitation' }
     ]
 })
