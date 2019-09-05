@@ -19,7 +19,7 @@ module.exports = new Schema({
     },
     used_at: {
         type: Date,
-        required: true
+        required: false
     },
     canceled: {
         type: Date,
@@ -28,7 +28,7 @@ module.exports = new Schema({
     },
     status: {
         type: String,
-        enum: [waiting, visited, expired, cancelled],
+        enum: ['waiting', 'visited', 'expired', 'cancelled'],
         default: waiting,
         required: true
     },
