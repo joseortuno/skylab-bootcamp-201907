@@ -23,7 +23,7 @@ module.exports = new Schema({
     },
     canceled: {
         type: Date,
-        default: 'waiting',
+        default: false,
         required: false,
     },
     status: {
