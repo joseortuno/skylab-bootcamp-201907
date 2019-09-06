@@ -13,11 +13,10 @@ module.exports = new Schema({
         type: {
             type: String,
             enum: ['Point'],
-            required: false
+            default: 'Point'
         },
         coordinates: {
             type: [Number],
-            required: false
         }
     },
     status: {
