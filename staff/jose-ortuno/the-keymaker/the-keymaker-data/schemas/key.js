@@ -7,15 +7,15 @@ module.exports = new Schema({
     },
     valid_from: {
         type: Date,
-        required: false,
+        required: true,
     },
     valid_until: {
         type: Date,
-        required: false,
+        required: true,
     },
     token: {
         type: String,
-        required: false,
+        required: true,
     },
     used_at: {
         type: Date,
@@ -23,6 +23,7 @@ module.exports = new Schema({
     },
     canceled: {
         type: Date,
+        default: 'waiting',
         required: false,
     },
     status: {
