@@ -23,7 +23,6 @@ module.exports = new Schema({
     },
     canceled: {
         type: Date,
-        default: false,
         required: false,
     },
     status: {
