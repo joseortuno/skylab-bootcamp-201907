@@ -23,7 +23,5 @@ module.exports = new Schema({
         type: Boolean,
         required: true
     },
-    user: [
-        { type: ObjectId, ref: 'User' }
-    ]
+    user: { type: ObjectId, ref: 'User' }
 })
