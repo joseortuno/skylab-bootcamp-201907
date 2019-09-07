@@ -2,8 +2,8 @@ const { Schema } = require('mongoose')
 
 module.exports = new Schema({
     logo: {
-        path: String,
-        required: false 
+        type: String,
+        required: true 
     },
     alias: {
         type: String,
