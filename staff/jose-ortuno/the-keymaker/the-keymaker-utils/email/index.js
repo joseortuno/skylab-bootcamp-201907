@@ -1,7 +1,7 @@
-require('dotenv').config()
+// require('dotenv').config()
 const nodemailer = require('nodemailer')
 const { validate } = require('../index')
-const { env: { SMTP_USER, SMTP_PASS, SMTP_HOST, SMPT_PORT, SMTP_SECURE } } = process
+// const { env: { SMTP_USER, SMTP_PASS, SMTP_HOST, SMPT_PORT, SMTP_SECURE } } = process
 
 module.exports = function (aliasGuest, emailGuest) {
     validate.string(aliasGuest, 'alias guest')
@@ -11,12 +11,12 @@ module.exports = function (aliasGuest, emailGuest) {
     
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-        host: SMTP_HOST,
-        port: SMPT_PORT,
-        secure: SMTP_SECURE, // true for 465, false for other ports
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false, // true for 465, false for other ports
         auth: {
-            user: SMTP_USER, // generated ethereal user
-            pass: SMTP_PASS // generated ethereal password
+            user: 'keymakergenerate@gmail.com', // generated ethereal user
+            pass: 'VYZvm8GpJjGmend' // generated ethereal password
         }
     })
 
