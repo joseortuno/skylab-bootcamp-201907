@@ -3,56 +3,63 @@ require('dotenv').config()
 const { expect } = require('chai')
 const updateUser = require('.')
 const { database, models: { User } } = require('the-keymaker-data')
+const { random } = require('the-keymaker-utils')
 
-const { env: { DB_URL_TEST }} = process
+const { env: { DB_URL_TEST } } = process
 
 describe('logic - update user', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let name, surname, email, password, id, body
+    // user
+    let alias, email, password, userId, body, path
 
-    beforeEach(() => {
-        name = `name-${Math.random()}`
-        surname = `surname-${Math.random()}`
-        email = `email-${Math.random()}@domain.com`
-        password = `password-${Math.random()}`
+    beforeEach(async () => {
+        alias = `alias-${random.number(0, 100000)}`
+        email = `email-${random.number(0, 100000)}@domain.com`
+        password = `password-${random.number(0, 100000)}`
+        path = `path/${random.number(0, 100000)}/${random.number(0, 100000)}/${random.number(0, 100000)}`
 
         body = {
-            name: `name-${Math.random()}`,
-            surname: `surname-${Math.random()}`,
-            email: `email-${Math.random()}@domain.com`,
-            password: `password-${Math.random()}`,
-            extra: `extra-${Math.random()}`
+            email: `email-${random.number(0, 100000)}@domain.com`,
+            password: `password-${random.number(0, 100000)}`,
         }
 
-        return User.deleteMany()
-            .then(() => User.create({ name, surname, email, password }))
-            .then(user => id = user.id)
+        await User.deleteMany()
+        const user = await User.create({ logo: path, alias, email, password })
+        userId = user.id
+
     })
 
-    it('should succeed on correct data', () =>
-        updateUser(id, body)
-            .then(result => {
-                expect(result).not.to.exist
+    it('should succeed on correct data', async () => {
+        
+        const result = await updateUser(userId, body)
+        expect(result).not.to.exist
+        const user = await User.findById(userId)
+        expect(user).to.exist
+        expect(user.email).to.equal(body.email)
+        expect(user.password).to.exist
+    })
 
-                return User.findById(id)
-            })
-            .then(user => {
-                expect(user).to.exist
-                expect(user.name).to.equal(body.name)
-                expect(user.surname).to.equal(body.surname)
-                expect(user.email).to.equal(body.email)
-                expect(user.password).to.equal(body.password)
-                expect(user.extra).not.to.exist
-            })
-    )
+    it('should fail on non-existing user', async () => {
+        userId = '5d5d5530531d455f75da9fF9'
+        
+        try {
+            await updateUser(userId, body)
+        } catch ({message}) {
+            expect(message).to.equal(`the connection ok, but there are not modifications`)
+        }
+    })
 
-    it('should fail on non-existing user', () => {
-        id = '5d5d5530531d455f75da9fF9'
-
-        return updateUser(id, body)
-            .then(() => { throw new Error('should not reach this point') })
-            .catch(({ message }) => expect(message).to.equal(`user with id ${id} does not exist`))
+    it('should fail non-modifiable properties: alias', async () => {
+        body = {
+            alias: `alias-${random.number(0, 100000)}`
+        }
+        
+        try {
+            await updateUser(userId, body)
+        } catch ({message}) {
+            expect(message).to.equal(`alias non-modifiable`)
+        }
     })
 
     after(() => database.disconnect())

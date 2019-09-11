@@ -1,11 +1,11 @@
 const logic = require('../logic')
 
 module.exports = async (req, res) => {
-    const { userId } = req
+    const { userId, query: { q } } = req
 
     try {
-        const user = await logic.retrieveUser(userId)
-        res.json({ message: 'user retrieved correctly', user })
+        const key = await logic.searchKeys(userId, q)
+        res.json({ message: 'key search correctly', key })
     } catch ({ message }) {
         res.status(404).json({ error: message })
     }

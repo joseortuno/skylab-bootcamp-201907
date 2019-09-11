@@ -1,5 +1,6 @@
 const { models: { User } } = require('the-keymaker-data')
 const { validate } = require('the-keymaker-utils')
+const bcrypt = require('bcryptjs')
 
 /**
  * Authenticates a user by its credentials.
@@ -16,10 +17,10 @@ module.exports = function (email, password) {
 
     return (async () => {
         const user = await User.findOne({ email })
-
         if (!user) throw new Error(`user with e-mail ${email} does not exist`)
 
-        if (user.password !== password) throw new Error('wrong credentials')
+        const match = await bcrypt.compare(password, user.password)
+        if(!match) throw new Error ('wrong credentials')
 
         return user.id
     })()

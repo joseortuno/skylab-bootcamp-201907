@@ -3,22 +3,24 @@ require('dotenv').config()
 const { expect } = require('chai')
 const authenticateUser = require('.')
 const { database, models: { User } } = require('the-keymaker-data')
+const { random } = require('the-keymaker-utils')
+const bcrypt = require('bcryptjs')
 
 const { env: { DB_URL_TEST }} = process
 
-describe.only('logic - authenticate user', () => {
+describe('logic - authenticate user', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let name, surname, email, password, id
+    let alias, email, password, path, id
 
     beforeEach(async () => {
-        name = `name-${Math.random()}`
-        surname = `surname-${Math.random()}`
-        email = `email-${Math.random()}@domain.com`
-        password = `password-${Math.random()}`
+        alias = `alias-${random.number(0, 100000)}`
+        email = `email-${random.number(0, 100000)}@domain.com`
+        password = `password-${random.number(0, 100000)}`
+        path = `path/${random.number(0, 100000)}/${random.number(0, 100000)}/${random.number(0, 100000)}`
 
         await User.deleteMany()
-        const user = await User.create({ name, surname, email, password })
+        const user = await User.create({ logo: path, alias,  email, password: await bcrypt.hash(password, 10)})
         id = user.id
     })
 

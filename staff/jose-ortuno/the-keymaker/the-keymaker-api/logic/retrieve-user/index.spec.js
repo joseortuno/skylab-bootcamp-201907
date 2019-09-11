@@ -3,37 +3,39 @@ require('dotenv').config()
 const { expect } = require('chai')
 const retrieveUser = require('.')
 const { database, models: { User } } = require('the-keymaker-data')
+const { random } = require('the-keymaker-utils')
 
-const { env: { DB_URL_TEST }} = process
+const { env: { DB_URL_TEST } } = process
 
 describe('logic - retrieve user', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let name, surname, email, password, id
+    // user
+    let alias, email, password, path, userId
 
-    beforeEach(() => {
-        name = `name-${Math.random()}`
-        surname = `surname-${Math.random()}`
-        email = `email-${Math.random()}@domain.com`
-        password = `password-${Math.random()}`
+    beforeEach(async () => {
+        // user
+        alias = `alias-${random.number(0, 100000)}`
+        email = `email-${random.number(0, 100000)}@domain.com`
+        password = `password-${random.number(0, 100000)}`
+        path = `path/${random.number(0, 100000)}/${random.number(0, 100000)}/${random.number(0, 100000)}`
 
-        return User.deleteMany()
-            .then(() => User.create({ name, surname, email, password }))
-            .then(user => id = user.id)
+        await User.deleteMany()
+        const user = await User.create({ logo: path, alias, email, password })
+        userId = user.id
     })
 
-    it('should succeed on correct data', () =>
-        retrieveUser(id)
-            .then(user => {
-                expect(user).to.exist
-                expect(user.id).to.equal(id)
-                expect(user._id).not.to.exist
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).not.to.exist
-            })
-    )
+    it('should succeed on correct data', async () => {
+        const user = await retrieveUser(userId)
+        
+        expect(user).to.exist
+        expect(user.id).to.equal(userId)
+        expect(user._id).not.to.exist
+        expect(user.alias).to.equal(alias)
+        expect(user.email).to.equal(email)
+        expect(user.logo).to.equal(path)
+        expect(user.password).not.to.exist
+    })
 
     after(() => database.disconnect())
 })
