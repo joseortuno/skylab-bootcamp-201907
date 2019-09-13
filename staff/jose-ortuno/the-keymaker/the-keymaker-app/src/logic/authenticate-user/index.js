@@ -1,26 +1,31 @@
-import { validate } from 'utils'
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL
-export default function (email, password) {
+// const { env: { REACT_APP_API_URL } } = process
+import { validate } from 'the-keymaker-utils'
 
-    validate.string(email, 'email')
-    validate.email(email, 'email')
+// const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+
+export default function (email, password) {
+    validate.string(email, 'e-mail')
+    validate.email(email, 'e-mail')
     validate.string(password, 'password')
 
     return (async () => {
-        
-        const response = await fetch(`${REACT_APP_API_URL}/auth`, {
-            method: 'POST',
+        const response = await fetch(`http://localhost:8080/api/auth`, {
+            method: 'post',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({email, password})
+            body: JSON.stringify({ email, password })
         })
         
-        if (response.status !== 200) {
-            const { error } = await response.json()
-            throw Error(error)
+        if (response.status === 200) {
+            const { token } = await response.json()
+
+            //return token
+            this.__token__ = token
+
+            return
         }
-        else {
-            return await response.json()
-        }
-            
+
+        const { error } = await response.json()
+
+        throw Error(error)
     })()
 }

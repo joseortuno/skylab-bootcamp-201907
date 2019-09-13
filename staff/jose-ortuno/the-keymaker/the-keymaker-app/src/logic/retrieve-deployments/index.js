@@ -4,7 +4,7 @@ export default function () {
     // validate fields
 
     return (async () => {
-        const response = await fetch(`http://localhost:8080/api/users/`, {
+        const response = await fetch(`http://localhost:8080/api/deployments`, {
             method: 'get',
             headers: {
                 authorization: `bearer ${this.__token__}`
@@ -17,8 +17,8 @@ export default function () {
             throw Error(error)
         }
 
-        const { user } = await response.json()
+        const { deployments }  = await response.json()
 
-        return user
+        return deployments
      })()
 }

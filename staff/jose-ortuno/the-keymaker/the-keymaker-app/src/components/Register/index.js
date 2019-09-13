@@ -1,17 +1,19 @@
 import React from 'react'
 
-export default function ({ onBack, onLogin }) {
+export default function ({ onBack, onRegister }) {
     return <>
-        <h2>Login</h2>
+        <h2>Register</h2>
         <form onSubmit={event => {
             event.preventDefault()
 
-            const { target: { email: { value: email }, password: { value: password } } } = event
+            const { target: { alias: { value: alias }, email: { value: email }, password: { value: password }, repassword: { value: repassword } } } = event
 
-            onLogin(email, password)
+            onRegister(alias, email, password, repassword)
         }}>
+            <input type="text" name="alias" />
             <input type="email" name="email" />
             <input type="password" name="password" />
+            <input type="password" name="repassword" />
             <button>Proceed</button>
         </form>
         <a href="#" onClick={event => {
