@@ -1,0 +1,97 @@
+.calendar {
+  margin: 1em 0 5em 0;
+  border: 1px solid lightgrey;
+  width: 100%;
+}
+.calendar__week, .calendar__header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.calendar__week {
+  grid-auto-rows: 200px;
+  text-align: right;
+}
+.calendar__header {
+  grid-auto-rows: 50px;
+  align-items: center;
+  text-align: center;
+}
+.calendar__day {
+  font-size: 0.75rem;
+  color: grey;
+  padding: 16px;
+  border-right: 1px solid lightgrey;
+  border-top: 1px solid lightgrey;
+}
+.calendar__day:last-child {
+  border-right: 0;
+}
+.calendar__header > div {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.calendar__disabled {
+  color: red;
+}
+
+.App {
+  text-align: center;
+}
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.App-link {
+  color: #61dafb;
+}
+
+.calendar {
+  margin: 1em 0 5em 0;
+  border: 1px solid lightgrey;
+  width: 100%;
+}
+.calendar__week, .calendar__header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.calendar__week {
+  grid-auto-rows: 200px;
+  text-align: right;
+}
+.calendar__header {
+  grid-auto-rows: 50px;
+  align-items: center;
+  text-align: center;
+}
+.calendar__day {
+  font-size: 0.75rem;
+  color: grey;
+  padding: 16px;
+  border-right: 1px solid lightgrey;
+  border-top: 1px solid lightgrey;
+}
+.calendar__day:last-child {
+  border-right: 0;
+}
+.calendar__header > div {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.calendar__disabled {
+  color: red;
+}
+
+/*# sourceMappingURL=index.css.map */

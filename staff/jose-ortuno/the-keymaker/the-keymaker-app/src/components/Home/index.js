@@ -1,8 +1,9 @@
-import React from 'react'
 import './index.sass'
+import React from 'react'
 import { Route, withRouter } from 'react-router-dom'
 
 // COMPONENTS
+import RegisterKey from '../RegisterKey'
 import ViewKeys from '../ViewKeys'
 import RegisterDeployment from '../RegisterDeployment'
 import ViewDeployments from '../ViewDeployments'
@@ -15,8 +16,8 @@ export default withRouter(function ({ onLogout }) {
         <main>
             <Route exact path="/deployments" render={() => <ViewDeployments />} />
             <Route path="/deployments/register-deployment" render={() => <RegisterDeployment />} />
-            <Route path="/keys" render={() => <ViewKeys />} />
-            <Route path="/keys/register-key" render={() => <RegisterKey />} />
+            <Route exact path="/deployments/keys" render={() => <ViewKeys />} />
+            <Route path="/deployments/keys/register-key" render={() => <RegisterKey />} />
         </main>
 
     </>

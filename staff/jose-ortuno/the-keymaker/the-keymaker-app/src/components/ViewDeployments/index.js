@@ -1,3 +1,4 @@
+import './index.sass'
 import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
@@ -17,8 +18,8 @@ export default withRouter(function ({ history }) {
         })()
     }, [])
 
-    return <section className='view'>
-        <div className='view_navigate'>
+    return <section className='deployments view'>
+        <div className='filter view_navigate'>
             <p>filter deployments: <button>active</button> <button>inactive</button> <button>all</button> | <button onClick={handleGoToRegisterDeployment}>+ deployment</button></p>
         </div>
         {deployments && <div className='view_list'>

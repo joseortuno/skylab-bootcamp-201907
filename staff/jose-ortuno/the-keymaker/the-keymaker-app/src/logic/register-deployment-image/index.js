@@ -12,23 +12,17 @@ debugger
         const response = await fetch(`http://localhost:8080/api/users/deployment/${deploymentId}/upload`, {
             method: 'post',
             headers: {
-                'content-type': 'application/json', 
                 'authorization': `bearer ${this.__token__}`
             },
-            body: JSON.stringify({ deploymentId, formData})
+            body: formData
         })
         debugger
-        if (response.status === 200) {
-            const { message } = await response.json()
-        
-        
-        } else {
+        if (response.status !== 200) {
             const { error } = await response.json()
             throw new Error(error)
-        }
-
-        const _response = await response.json()
+        } 
+        const { message } = await response.json()
         debugger
-        return _response
+        return message
     })()
 }

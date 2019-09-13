@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
 import './index.sass'
+import React, { useState, useEffect } from 'react'
 import Register from '../Register'
 import Login from '../Login'
 import logic from '../../logic'
 import { Route, Switch, withRouter } from 'react-router-dom'
 
-import Deployments from '../Deployments'
+import Home from '../Home'
 
 export default withRouter(function ({ history }) {
-  const [view, setView] = useState(logic.isUserLogged() ? 'deployments' : undefined)
+  const [view, setView] = useState(logic.isUserLogged() ? 'home' : undefined)
 
   const handleBack = () => {
     setView(undefined)
@@ -30,7 +30,7 @@ export default withRouter(function ({ history }) {
     try {
       await logic.authenticateUser(email, password)
 
-      setView('deployments')
+      setView('home')
       history.push('/deployments')
     } catch ({ message }) {
       console.log('fail login', message)
@@ -73,10 +73,10 @@ export default withRouter(function ({ history }) {
         </ul>
       </nav>}
     </header>
-    <Switch>
+
       <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
       <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
-      <Route path="/deployments" render={() =>     logic.isUserLogged() ?  <Deployments onLogout={handleLogout} /> : history.push('/')} />}
-    </Switch>
+      <Route path="/deployments" render={() => logic.isUserLogged() ? <Home onBack={handleBack} onLogout={handleLogout} /> : history.push('/')} />
+
   </div>
 })

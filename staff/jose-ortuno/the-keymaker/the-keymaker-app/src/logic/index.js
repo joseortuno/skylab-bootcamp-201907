@@ -6,6 +6,8 @@ import retrieveUser from './retrieve-user'
 import retrieveDeployments from './retrieve-deployments'
 import registerDeployment from './register-deployment'
 import registerDeploymentImage from './register-deployment-image'
+import registerKey from './register-key'
+import retrieveKeys from './retrieve-keys'
 
 export default {
     set __token__(token) {
@@ -23,6 +25,8 @@ export default {
     retrieveUser,
     retrieveDeployments,
     registerDeployment,
-    registerDeploymentImage
+    registerDeploymentImage,
+    registerKey,
+    retrieveKeys
     
 }
