@@ -1,6 +1,10 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
+    created_at: {
+        type: Date,
+        required: true,
+    },
     logo: { 
         type: String,
         required: false 
