@@ -9,7 +9,7 @@ const moment = require('moment')
 
 const { env: { DB_URL_TEST, JWT_SECRET } } = process
 
-describe.only('logic - use key', () => {
+describe('logic - use key', () => {
     before(() => database.connect(DB_URL_TEST))
 
     let alias_user, email, password, userId, path

@@ -81,13 +81,28 @@ module.exports =
                 }
             })
 
+            // TODO: conseguir dirección deployment. separar fecha y hora.
+
+            const subjectMail = `hello ${aliasGuest}! Key 🔑👉🏠`
+            const textMail = `hello ${aliasGuest}!
+you have an agreed visit to visit a property.
+opening time visit to the property:
+  - entry date: ${validFrom}
+  - departure date: ${validUntil}
+  - start time: XX
+  - end time: XX
+
+  - property address: XX
+  
+  <a href="">http://localhost:3000/#/deployments/get-key/${keyId}</a>`
+
             // send mail with defined transport object
             let info = await transporter.sendMail({
                 from: '"TheKeymaker 🔑👉🏠" <key@thekeymaker.com>', // sender address
                 to: emailGuest, // list of receivers
-                subject: 'Hello' + aliasGuest + '!' + 'Key 🔑👉🏠', // Subject line
-                text: 'Hello!' + aliasGuest, // plain text body
-                html: '<b>Hello world?</b>' // html body
+                subject: subjectMail, // Subject line
+                text: textMail, // plain text body
+                html: `<b>${textMail}</b>` // html body
             });
 
             console.log('Message sent: %s', info.messageId);

@@ -7,7 +7,7 @@ module.exports = (req, res) => {
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
         logic.uploadImageDeployment(userId, deploymentId, file)
-            .then(() => res.json({ message: 'deployment image successfully uploaded' }))
+            .then(() => res.status(200).json({ message: 'deployment image successfully uploaded' }))
             .catch(({ message }) => res.status(400).json({ error: message }))
     })
     req.pipe(busboy)

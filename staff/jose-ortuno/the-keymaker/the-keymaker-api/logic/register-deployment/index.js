@@ -27,6 +27,8 @@ module.exports =
         validate.string(userId, 'userId')
         validate.number(longitude, 'longitude')
         validate.number(latitude, 'latitude')
+
+        const createdAt = new Date()
         
         if(logo === undefined) logo = '/img/user'
 
@@ -36,7 +38,8 @@ module.exports =
             const deployment = await Deployment.findOne({ alias })
             if (deployment) throw Error('alias already registered')
 
-            const getDeployment = await Deployment.create({ logo, alias, status, user: userId, location: { coordinates: [longitude, latitude]} })
+
+            const getDeployment = await Deployment.create({ created_at: createdAt, logo, alias, status, user: userId, location: { coordinates: [longitude, latitude]} })
 
             return {id: getDeployment.id}
         })()

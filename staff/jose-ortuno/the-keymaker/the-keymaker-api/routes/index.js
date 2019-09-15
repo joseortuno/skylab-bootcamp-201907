@@ -27,6 +27,7 @@ const retrieveKey = require('./retrieve-key')
 const retrieveKeyAll = require('./retrieve-key-all')
 const updateKey = require('./update-key')
 const useKey = require('./use-key')
+const searchKeys = require('./search-keys')
 
 // IMAGE
 const uploadImageDeployment = require('./upload-image-deployment')
@@ -55,7 +56,7 @@ router.get('/key/:keyId/', [tokenMiddleware, jsonBodyParser], retrieveKey)
 router.get('/keys', [tokenMiddleware, jsonBodyParser], retrieveKeyAll)
 router.get('/key/:keyId/longitude/:longitude/latitude/:latitude/', jsonBodyParser, useKey)
 router.get('/key/:keyId/', [tokenMiddleware, jsonBodyParser], updateKey)
-router.get('/keys/search/:query', [tokenMiddleware, jsonBodyParser], searchKey)
+router.get('/keys/search/:query', [tokenMiddleware, jsonBodyParser], searchKeys)
 
 // IMAGE
 router.post('/users/deployment/:deploymentId/upload/', tokenMiddleware, uploadImageDeployment)
