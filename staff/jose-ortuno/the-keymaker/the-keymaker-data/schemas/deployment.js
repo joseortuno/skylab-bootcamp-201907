@@ -13,6 +13,10 @@ module.exports = new Schema({
         type: String,
         required: true
     },
+    address: {
+        type: String,
+        required: true
+    },
     location: {
         type: {
             type: String,
