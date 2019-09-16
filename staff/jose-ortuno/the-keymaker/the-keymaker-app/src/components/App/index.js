@@ -1,11 +1,13 @@
 import './index.sass'
 import React, { useState, useEffect } from 'react'
+import logic from '../../logic'
+import { Route, withRouter } from 'react-router-dom'
+
+// COMPONENTS
 import Register from '../Register'
 import Login from '../Login'
-import logic from '../../logic'
-import { Route, Switch, withRouter } from 'react-router-dom'
-
 import Home from '../Home'
+import AccessDeployment from '../AccessDeployment'
 
 export default withRouter(function ({ history }) {
   const [view, setView] = useState(logic.isUserLogged() ? 'home' : undefined)
@@ -53,30 +55,38 @@ export default withRouter(function ({ history }) {
     history.push('/login')
   }
 
-  useEffect(() => {
-    if (history.location.pathname === '/') setView(undefined)
-  }, [history.location])
 
   const handleLogout = () => {
     logic.logUserOut()
-
-    setView(undefined)
     history.push('/')
   }
 
-  return <div>
-    <header>
-      {view !== 'home' && <nav>
-        <ul>
-          {view !== 'register' && <li><a href="" onClick={handleGoToRegister}>Register</a></li>}
-          {view !== 'login' && <li><a href="" onClick={handleGoToLogin}>Login</a></li>}
-        </ul>
-      </nav>}
-    </header>
+  return <>
 
-      <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
-      <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
+
+
+    <div className="container">
+      <Route path="/access/:id" render={props => <AccessDeployment />} />
+
+      <Route exact path="/" render={() => !logic.isUserLogged() ? <header className="landing__header" >
+        <nav>
+          <ul>
+            <li><a href="" onClick={handleGoToRegister}>Register</a></li>
+            <li><a href="" onClick={handleGoToLogin}>Login</a></li>
+          </ul>
+        </nav>
+      </header> : history.push('/deployments')} />
+
+      {!logic.isUserLogged() && <main className="landing__main">
+        <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
+        <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
+      </main>}
+
       <Route path="/deployments" render={() => logic.isUserLogged() ? <Home onBack={handleBack} onLogout={handleLogout} /> : history.push('/')} />
 
-  </div>
+      <footer>
+        <p><i class="fas fa-rocket"></i> made by jose ortuño</p>
+      </footer>
+    </div>
+  </>
 })

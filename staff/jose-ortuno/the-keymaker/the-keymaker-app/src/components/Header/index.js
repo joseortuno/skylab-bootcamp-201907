@@ -6,7 +6,7 @@ import './index.sass'
 // COMPONETS
 import Search from '../Search'
 
-export default function ({ goOnLogout }) {
+export default function ({ onQuery, goOnLogout }) {
     const [user, setUser] = useState(undefined)
 
     useEffect(() => {
@@ -18,16 +18,16 @@ export default function ({ goOnLogout }) {
     }, [])
 
     return <header>
-        <h1 className="logo">the keymaker</h1>
-        <Search />
-        <nav>
+        <Link to="/deployments"><h1 className="logo">the keymaker</h1></Link>
+        <Search onSearch={onQuery} />
+        <nav className="menu">
             <ul>
-                <li><Link to="deployments/keys">keys</Link></li>
-                <li><Link to="/deployments">deployments</Link></li>
-                <li>info</li>
-                <li><button onClick={goOnLogout}>> logout</button></li>
+                <li className="menu__keys"><Link to="/deployments/keys">keys</Link></li>
+                <li className="menu__calendar"><Link to="/deployments/keys/calendar">calendar</Link></li>
+                <li className="menu__deployments"><Link to="/deployments">deployments</Link></li>
+                <li className="menu__user">{user && <img src={user.logo} />}</li>
+                <li><button onClick={goOnLogout}><i class="fas fa-chevron-right"></i> logout</button></li>
             </ul>
         </nav>
-        <div>{user && <img src={user.logo} />}</div>
     </header>
 }

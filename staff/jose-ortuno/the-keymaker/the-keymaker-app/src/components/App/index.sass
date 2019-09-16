@@ -1,20 +1,62 @@
-.App
-  text-align: center
+// RESET
+*
+    margin: 0
+    padding: 0
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+    font-size: 16px
 
-  &-logo
-    animation: App-logo-spin infinite 20s linear
-    height: 40vmin
-    pointer-events: none
-
-  &-header
-    background-color: #282c34
-    min-height: 100vh
+// GENERAL
+body
+    font-family: 'Space Mono', monospace
+    background: #1E2431
+    color: #EFF1F3
+    font-weight: 400
     display: flex
     flex-direction: column
-    align-items: center
     justify-content: center
-    font-size: calc(10px + 2vmin)
-    color: white
-
-  &-link
-    color: #61dafb
+    align-items: center
+h2, h3
+    font-size: 1.1rem
+    font-weight: 400
+    margin: 10px
+h1
+    font-size: 2rem
+    font-weight: 400
+a
+    color: #EFF1F3
+    text-decoration: none
+    font-size: 1rem
+    transition: 0.5s
+    &:hover
+        opacity: 0.6
+p
+    font-size: 1rem
+    line-height: 1.2rem
+    margin: 10px 0
+    line-height: 1.5
+form
+    margin: 10px
+ul
+    list-style: none
+span
+    margin: 10px 0
+main
+    border-top: 1px solid #EFF1F3
+    border-bottom: 1px solid #EFF1F3
+    width: 100%
+    padding: 20px
+    background: #222835
+.container
+    border-right: 1px solid #EFF1F3
+    border-left: 1px solid #EFF1F3
+    margin: 0px auto
+    width: 90%
+    max-width: 1000px
+    min-width: 500px
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+.fas
+    font-size: 0.7rem

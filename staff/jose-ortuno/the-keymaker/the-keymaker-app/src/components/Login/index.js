@@ -13,7 +13,7 @@ export default function ({ onBack, onLogin }) {
         }}>
             <input type="email" name="email" />
             <input type="password" name="password" />
-            <button>Proceed</button>
+            <button><i class="fas fa-chevron-right"></i> login</button>
         </form>
         <a href="#" onClick={event => {
             event.preventDefault()

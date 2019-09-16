@@ -15,7 +15,7 @@ export default function ({ onBack, onRegister }) {
             <input type="email" name="email" />
             <input type="password" name="password" />
             <input type="password" name="repassword" />
-            <button>Proceed</button>
+            <button><i class="fas fa-chevron-right"></i> register</button>
         </form>
         <a href="#" onClick={event => {
             event.preventDefault()
