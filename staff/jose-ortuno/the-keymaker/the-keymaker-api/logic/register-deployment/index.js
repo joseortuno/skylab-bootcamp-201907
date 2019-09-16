@@ -20,17 +20,18 @@ module.exports =
      * @throws {Error} validate param longitude: longitude with value param is not a number
      * @throws {Error} validate param latitude: latitude  with value param is not a number
      */
-    function (logo, alias, status, userId, longitude, latitude) {
+    function (logo, alias, status, userId, address, longitude, latitude) {
         
         validate.string(alias, 'alias')
         validate.boolean(status, 'status')
         validate.string(userId, 'userId')
         validate.number(longitude, 'longitude')
         validate.number(latitude, 'latitude')
+        validate.number(address, 'address')
 
         const createdAt = new Date()
         
-        if(logo === undefined) logo = '/img/user'
+        if(logo === undefined) logo = 'https://res.cloudinary.com/dgsndtxtl/image/upload/v1568565363/burninghouse_mesu3s.jpg'
 
         return (async () => {
             const user = await User.findById(userId)
@@ -39,7 +40,7 @@ module.exports =
             if (deployment) throw Error('alias already registered')
 
 
-            const getDeployment = await Deployment.create({ created_at: createdAt, logo, alias, status, user: userId, location: { coordinates: [longitude, latitude]} })
+            const getDeployment = await Deployment.create({ created_at: createdAt, logo, alias, status, user: userId, address, location: { coordinates: [longitude, latitude]} })
 
             return {id: getDeployment.id}
         })()

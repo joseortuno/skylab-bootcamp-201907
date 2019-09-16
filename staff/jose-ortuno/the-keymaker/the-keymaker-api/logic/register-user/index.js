@@ -31,6 +31,6 @@ module.exports =
             
             const hash = await bcrypt.hash(password,10)
 
-            await User.create({ logo: '/img/user', alias, email, password: hash })
+            await User.create({ logo: 'https://res.cloudinary.com/dgsndtxtl/image/upload/v1568565584/gettyimages-758378481_emty9v.jpg', alias, email, password: hash })
         })()
     }

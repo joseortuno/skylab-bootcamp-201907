@@ -1,11 +1,12 @@
-const { models: { Key } } = require('the-keymaker-data')
+const { models: { Key, User } } = require('the-keymaker-data')
 const { validate } = require('the-keymaker-utils')
 
 module.exports =
     /**
-     * Search keys
+     * Search key
      * 
-     * @param {String} searchParamsAndUserId
+     * @param {String} idUser
+     * @param {String} query
      * 
      * @return {Array} array keys
      * 
@@ -15,16 +16,16 @@ module.exports =
      * @throws {Error} param email guest: email guest is not a string
      * @throws {Error} param deployment: deployment is not a string
      */
-    function (searchParamsAndUserId) {
-        if (!(searchParamsAndUserId instanceof Object)) throw Error(`input ${searchParamsAndUserId} is not an object`)
-        if (Object.keys(searchParamsAndUserId).length === 0) throw Error('input is empty')
-        if (searchParamsAndUserId.alias_guest) validate.string(searchParamsAndUserId.alias_guest, 'alias guest')
-        if (searchParamsAndUserId.email_guest) validate.string(searchParamsAndUserId.email_guest, 'email guest')
-        if (searchParamsAndUserId.deployment) validate.string(searchParamsAndUserId.deployment, 'deployment')
+    function (idUser, query) {
+        validate.string(idUser, 'idUser')
+        validate.string(query, 'query')
 
         return (async () => {
-            const keys = await Key.find(searchParamsAndUserId, { __v: 0 }).lean()
-            if (!keys) throw Error('no results')
+            const user = await User.findById(idUser)
+            if (!user) throw Error('wrong credentials')
+
+            const keys = await Key.find({ alias_guest: query, user: idUser }, {__v: 0}).lean()
+            if (keys.length === 0) throw Error('no results')
 
             return keys.map(key => {
                 key.id = key._id.toString()

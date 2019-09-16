@@ -12,7 +12,7 @@ module.exports =
      * @throws {Error} param deployment id: user with id deployment does not exist
      * @throws {Error} deployment not found
      */
-    function (userId, deploymentId) {
+    function (deploymentId) {
         validate.string(deploymentId, 'deployment id')
 
         return (async () => {
@@ -23,8 +23,6 @@ module.exports =
             delete deployment._id
             deployment.user = deployment.user._id.toString()
             delete deployment.user._id
-
-            if(deployment.user._id === userId) throw Error('does not have permissions')
 
             deployment.location = {
                 longitude: deployment.location.coordinates[0],

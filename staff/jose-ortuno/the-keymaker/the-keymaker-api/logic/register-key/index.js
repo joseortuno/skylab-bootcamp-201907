@@ -3,9 +3,7 @@ const { validate } = require('the-keymaker-utils')
 const { env: { JWT_SECRET } } = process
 const jwt = require('jsonwebtoken')
 const moment = require('moment')
-const nodemailer = require('nodemailer')
-
-const { env: { SMTP_USER, SMTP_PASS, SMTP_HOST, SMPT_PORT, SMTP_SECURE } } = process
+const sendEmail = require('../../helpers/send-email')
 
 module.exports =
     /**
@@ -47,6 +45,17 @@ module.exports =
             // check that the deployment exists
             const deployment = await Deployment.findById(deploymentId)
             if (!deployment) throw Error('Wrong deployment')
+            // check que ninguna llave exista en la franja horaria especificada
+            const keys = await Key.find({ user: userId }, { __v: 0 })
+            if (keys.length !== 0) {
+                const select = keys.map(key => {
+                    if (key.deployment._id.toString() === deploymentId) return key
+                })
+                if(select) select.forEach(element => {
+                    if (validFrom > element.valid_from && validFrom < element.valid_until || validUntil > element.valid_from && validUntil < element.valid_until) throw Error('sorry, the requested time slot is busy')
+                })
+            }
+
             // create key sin token
             const key = await Key.create({ created_at: createdAt, valid_from: validFrom, valid_until: validUntil, status: 'waiting', alias_guest: aliasGuest, email_guest: emailGuest, deployment: deploymentId, user: userId })
             const keyId = key._id.toString()
@@ -62,61 +71,14 @@ module.exports =
             const update = { token: _token }
             await Key.updateOne({ _id: key._id.toString() }, { $set: update })
 
-            /************************************************************************
-             * EMAIL INIT
-             ************************************************************************/
-            
-            // email(aliasGuest, emailGuest) // utils
-            
-            // Generate test SMTP service account from ethereal.emails
+            /*EMAIL INIT************************************************************/
+            let info
+            const successEmail = await sendEmail(keyId, emailGuest, aliasGuest, validFrom, validUntil, deployment.alias, deployment.logo)
+            if(successEmail) info = 'email sent correctly' 
+            else info = 'email not sent'
+            /*EMAIL FINISH**********************************************************/
 
-            // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
-                host: SMTP_HOST,
-                port: 587,
-                secure: false, // true for 465, false for other ports
-                auth: {
-                    user: SMTP_USER, // generated ethereal user
-                    pass: SMTP_PASS // generated ethereal password
-                }
-            })
-
-            // TODO: conseguir dirección deployment. separar fecha y hora.
-
-            const subjectMail = `hello ${aliasGuest}! Key 🔑👉🏠`
-            const textMail = `hello ${aliasGuest}!
-you have an agreed visit to visit a property.
-opening time visit to the property:
-  - entry date: ${validFrom}
-  - departure date: ${validUntil}
-  - start time: XX
-  - end time: XX
-
-  - property address: XX
-  
-  <a href="">http://localhost:3000/#/deployments/get-key/${keyId}</a>`
-
-            // send mail with defined transport object
-            let info = await transporter.sendMail({
-                from: '"TheKeymaker 🔑👉🏠" <key@thekeymaker.com>', // sender address
-                to: emailGuest, // list of receivers
-                subject: subjectMail, // Subject line
-                text: textMail, // plain text body
-                html: `<b>${textMail}</b>` // html body
-            });
-
-            console.log('Message sent: %s', info.messageId);
-            // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-            // Preview only available when sending through an Ethereal account
-            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-            // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-            
-            /************************************************************************
-             * EMAIL FINISH
-            ************************************************************************/
-
-            return { id: keyId, token: _token }
+            return { id: keyId, token: _token, email: info }
         })()
     }
 

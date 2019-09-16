@@ -45,14 +45,14 @@ router.patch('/users', [tokenMiddleware, jsonBodyParser], updateUser)
 
 // DEPLOYMENT
 router.post('/deployment', [tokenMiddleware, jsonBodyParser], registerDeployment)
-router.get('/deployment/:deploymentId/', [tokenMiddleware, jsonBodyParser], retrieveDeployment)
+router.get('/deployment/:deploymentId/', jsonBodyParser, retrieveDeployment)
 router.get('/deployments', [tokenMiddleware, jsonBodyParser], retrieveDeploymentAll)
 router.patch('/deployment/:deploymentId/', [tokenMiddleware, jsonBodyParser], updateDeployment)
 router.get('/deployments/search/:query', [tokenMiddleware, jsonBodyParser], searchDeployments)
 
 // KEY
 router.post('/key', [tokenMiddleware, jsonBodyParser], registerKey)
-router.get('/key/:keyId/', [tokenMiddleware, jsonBodyParser], retrieveKey)
+router.get('/key/:keyId/', jsonBodyParser, retrieveKey)
 router.get('/keys', [tokenMiddleware, jsonBodyParser], retrieveKeyAll)
 router.get('/key/:keyId/longitude/:longitude/latitude/:latitude/', jsonBodyParser, useKey)
 router.get('/key/:keyId/', [tokenMiddleware, jsonBodyParser], updateKey)

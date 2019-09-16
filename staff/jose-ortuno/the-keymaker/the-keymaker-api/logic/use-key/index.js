@@ -40,7 +40,7 @@ module.exports =
             if (deployment.status !== true) throw Error(`operation not allowed: the state of the key is ${deployment.status}`)
             deployment.id = deployment._id.toString()
 
-            const deploymentsNear = await Deployment.find({ location: { $nearSphere: { $geometry: { type: 'Point', coordinates: [_longitude, _latitude] }, $maxDistance: 20 } } }).lean()
+            const deploymentsNear = await Deployment.find({ location: { $nearSphere: { $geometry: { type: 'Point', coordinates: [_longitude, _latitude] }, $maxDistance: 100 } } }).lean()
             if (!deploymentsNear) throw Error('the operation could not be performed')
 
             deploymentsNear.forEach(deploymentNear => {

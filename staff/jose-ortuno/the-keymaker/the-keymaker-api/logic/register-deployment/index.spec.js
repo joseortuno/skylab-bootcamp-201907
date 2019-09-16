@@ -14,7 +14,7 @@ describe('logic - register deployment', () => {
     let alias_user, email, password, path, userId
 
     // deployment
-    let alias_deployment, status
+    let alias_deployment, address_deployment, status
 
     // deployment Skylab
     const longitude = 2.199905
@@ -34,12 +34,13 @@ describe('logic - register deployment', () => {
         // deployment
         alias_deployment = `alias_deployment-${random.number(0, 100000)}`
         status = random.boolean()
+        address_deployment = `address_deployment-${random.number(0, 100000)}`
 
         await Deployment.deleteMany()
     })
 
     it('should succeed on correct data', async () => {
-        const response = await registerDeployment(path, alias_deployment, status, userId, longitude, latitude)
+        const response = await registerDeployment(path, alias_deployment, status, userId, address, longitude, latitude)
         expect(response).to.exist
 
         const deployment = await Deployment.findOne({ _id: response.id })
@@ -48,6 +49,7 @@ describe('logic - register deployment', () => {
         expect(deployment.created_at).to.exist
         expect(deployment.id).to.equal(response.id)
         expect(deployment.alias).to.equal(alias_deployment)
+        expect(deployment.address).to.equal(address_deployment)
         expect(deployment.status).to.equal(status)
         expect(deployment.user.toString()).to.equal(userId)
 

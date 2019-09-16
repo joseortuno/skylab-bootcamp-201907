@@ -12,7 +12,7 @@ module.exports =
      * @throws {Error} param key id: user with id key does not exist
      * @throws {Error} key not found
      */
-    function (userId, keyId) {
+    function (keyId) {
         validate.string(keyId, 'key id')
         
         return (async () => {
@@ -24,9 +24,7 @@ module.exports =
             key.deployment = key.deployment._id.toString()
             delete key.deployment._id
             key.user = key.user._id.toString()
-            delete key.user._id
-
-            if(key.user._id === userId) throw Error('does not have permissions')           
+            delete key.user._id      
 
             return key
         })()
