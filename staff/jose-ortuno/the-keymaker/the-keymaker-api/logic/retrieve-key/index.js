@@ -16,13 +16,14 @@ module.exports =
         validate.string(keyId, 'key id')
         
         return (async () => {
-            const key = await Key.findOne({ _id: keyId }, { __v: 0 }).lean()
+            const key = await Key.findOne({ _id: keyId }, { __v: 0 }).populate('deployment').lean()
             if (!key) throw Error('key not found')
             
             key.id = key._id.toString()
             delete key._id
             key.deployment = key.deployment._id.toString()
             delete key.deployment._id
+            delete key.deployment.__v
             key.user = key.user._id.toString()
             delete key.user._id      
 

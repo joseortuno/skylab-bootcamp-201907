@@ -16,7 +16,7 @@ describe('logic - retrieve key', () => {
     let alias_user, email, password, userId, path
 
     // deployment
-    let alias_deployment, status, deploymentId
+    let alias_deployment, address_deployment, status, deploymentId
 
     // deployment Skylab
     const longitude = 2.199905
@@ -45,11 +45,11 @@ describe('logic - retrieve key', () => {
 
         // deployment
         alias_deployment = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment = `address-${random.number(0, 100000)}`
         status = random.boolean()
 
         await Deployment.deleteMany()
-        const deployment = await Deployment.create({ alias: alias_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
+        const deployment = await Deployment.create({ created_at: new Date(), alias: alias_deployment, address: address_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
         deploymentId = deployment.id
 
         // key
@@ -85,7 +85,7 @@ describe('logic - retrieve key', () => {
     })
 
     it('should succeed on correct data', async () => {
-        const key = await retrieveKey(userId, keyId)
+        const key = await retrieveKey(keyId)
         expect(key).to.exist
         expect(key.created_at).to.exist
         expect(key.valid_from).to.exist

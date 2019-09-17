@@ -17,25 +17,37 @@ module.exports =
      * @throws {Error} param deployment: deployment is not a string
      */
     function (idUser, query) {
+        debugger
         validate.string(idUser, 'idUser')
         validate.string(query, 'query')
+        debugger
 
         return (async () => {
             const user = await User.findById(idUser)
             if (!user) throw Error('wrong credentials')
 
-            const keys = await Key.find({ alias_guest: query, user: idUser }, {__v: 0}).lean()
+            const keys = await Key.find({ alias_guest: query, user: idUser }, { __v: 0 }).populate('deployment').lean()
+            
             if (keys.length === 0) throw Error('no results')
+            
+            const result = keys.map(key => {
+                if (key._id) {
+                    key.id = key._id.toString()
+                    delete key._id
+                }
+                
+                if (key.deployment._id) {
+                    key.deployment.id = key.deployment._id.toString()
+                    delete key.deployment._id
+                    delete key.deployment.__v
+                }
 
-            return keys.map(key => {
-                key.id = key._id.toString()
-                delete key._id
-                key.deployment = key.deployment._id.toString()
-                delete key.deployment._id
-                key.user = key.user._id.toString()
-                delete key.user._id
+                key.user = key.user.toString()
+
                 return key
             })
+
+            return result
 
         })()
     }

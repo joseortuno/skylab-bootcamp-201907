@@ -7,7 +7,7 @@ const { random } = require('the-keymaker-utils')
 
 const { env: { DB_URL_TEST } } = process
 
-describe.only('logic - register key', () => {
+describe('logic - register key', () => {
     before(() => database.connect(DB_URL_TEST))
 
     // user

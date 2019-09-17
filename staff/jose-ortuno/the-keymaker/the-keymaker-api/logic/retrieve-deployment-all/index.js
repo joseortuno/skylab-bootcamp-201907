@@ -24,9 +24,9 @@ module.exports =
                 deployment.id = deployment._id.toString()
                 
                 delete deployment._id
-                
-                deployment.user = deployment.user._id.toString()
-                
+
+                deployment.user = deployment.user.toString()
+
                 deployment.location = {
                     longitude: deployment.location.coordinates[0],
                     latitude: deployment.location.coordinates[1]

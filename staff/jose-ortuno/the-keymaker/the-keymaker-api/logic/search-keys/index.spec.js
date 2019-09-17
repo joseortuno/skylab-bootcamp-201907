@@ -20,6 +20,13 @@ describe('logic - search keys', () => {
     let alias_deployment1, status1, deploymentId1
     let alias_deployment2, status2, deploymentId2
 
+    // guest
+    let alias_guest1, email_guest1
+    let alias_guest2, email_guest2
+    let alias_guest3, email_guest3
+    let alias_guest4, email_guest4
+
+
     // deployment #1 Skylab
     const longitude1 = 2.199905
     const latitude1 = 41.398406
@@ -70,6 +77,7 @@ describe('logic - search keys', () => {
 
         const user2 = await User.create({ logo: path2, alias: alias_user2, email: email2, password: password2 })
         userId2 = user2.id
+        
 
         /****************************************************************
         DEPLOYMENT
@@ -79,18 +87,18 @@ describe('logic - search keys', () => {
         // deployment1
 
         alias_deployment1 = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment1 = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment1 = `address-${random.number(0, 100000)}`
         status1 = random.boolean()
 
-        const deployment1 = await Deployment.create({ alias: alias_deployment1, status: status1, user: userId1, location: { coordinates: [longitude1, latitude1] } })
+        const deployment1 = await Deployment.create({ created_at: new Date(), logo:'djhfjsahdfjhsdf/kjgfushdfjsdhf', alias: alias_deployment1, address: address_deployment1, user: userId1, location: { coordinates: [longitude1, latitude1] }, status: status1 })
         deploymentId1 = deployment1.id
 
         // deployment2
         alias_deployment2 = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment2 = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment2 = `address-${random.number(0, 100000)}`
         status2 = random.boolean()
 
-        const deployment2 = await Deployment.create({ alias: alias_deployment2, status: status2, user: userId2, location: { coordinates: [longitude2, latitude2] } })
+        const deployment2 = await Deployment.create({ created_at: new Date(), logo:'djhfjsahdfjhsdf/kjgfushdfjsdhf', alias: alias_deployment2, address: address_deployment2, user: userId2, location: { coordinates: [longitude2, latitude2] }, status: status2 })
         deploymentId2 = deployment2.id
 
         /****************************************************************
@@ -204,34 +212,28 @@ describe('logic - search keys', () => {
 
     })
 
-    it('should succeed on correct data: user 1 data 1', async () => {
-        const searchParamsAndUserId = {
-            alias_guest: alias_guest2,
-            user: userId1
-        }
-        
-        const keys = await searchKeys(searchParamsAndUserId)
-        
+   it('should succeed on correct data: user 1 data 1', async () => {
+
+        let query = alias_guest1
+        const keys = await searchKeys(userId1, query)
         keys.forEach(key => {
             expect(key).to.exist
             expect(key.created_at).to.exist
             expect(key.valid_from).to.exist
             expect(key.valid_until).to.exist
             expect(key.status).to.equal('waiting')
-            expect(key.alias_guest).to.equal(alias_guest2)
-            expect(key.email_guest).to.equal(email_guest2)
-            expect(key.deployment).to.equal(deploymentId2)
+            expect(key.alias_guest).to.equal(alias_guest1)
+            expect(key.email_guest).to.equal(email_guest1)
+            expect(key.deployment).to.exist
+            expect(key.deployment.id).to.equal(deploymentId1)
             expect(key.user).to.equal(userId1)
         })
     })
 
     it('should succeed on correct data: user 2 data 2', async () => {
-        const searchParamsAndUserId = {
-            alias_guest: alias_guest4,
-            user: userId1
-        }
+        let query = alias_guest3
         
-        const keys = await searchKeys(searchParamsAndUserId)
+        const keys = await searchKeys(userId2, query)
         
         keys.forEach(key => {
             expect(key).to.exist
@@ -239,21 +241,20 @@ describe('logic - search keys', () => {
             expect(key.valid_from).to.exist
             expect(key.valid_until).to.exist
             expect(key.status).to.equal('waiting')
-            expect(key.alias_guest).to.equal(alias_guest4)
-            expect(key.email_guest).to.equal(email_guest4)
-            expect(key.deployment).to.equal(deploymentId2)
+            expect(key.alias_guest).to.equal(alias_guest3)
+            expect(key.email_guest).to.equal(email_guest3)
+            expect(key.deployment).to.exist
+            expect(key.deployment.id).to.equal(deploymentId1)
             expect(key.user).to.equal(userId2)
         })
     })
 
     it('should succeed no results', async () => {
-        const searchParamsAndUserId = {
-            alias_guest: 'no exist',
-            user: userId1
-        }
+        let query = 'no exist'
 
         try {
-            await searchKeys(searchParamsAndUserId)
+            
+            await searchKeys(userId1, query)
         } catch ({message}) {
             expect(message).to.equal(`no results`)
         }

@@ -13,19 +13,25 @@ module.exports =
      * @throws {Error} key not found
      */
     function (userId) {
+        debugger
         validate.string(userId, 'user id')
 
         return (async () => {
-            const keys = await Key.find({ user: userId }, { __v: 0 }).lean()
+            const keys = await Key.find({ user: userId }, { __v: 0 }).populate('deployment').lean()
             if (!keys) throw Error('keys not found')
-
+debugger
             return keys.map(key => {
                 key.id = key._id.toString()
                 delete key._id
-                key.deployment = key.deployment._id.toString()
-                delete key.deployment._id
-                key.user = key.user._id.toString()
-                delete key.user._id
+                
+                if (key.deployment._id) {
+                    key.deployment.id = key.deployment._id.toString()
+                    delete key.deployment._id
+                    delete key.deployment.__v
+                }
+
+                key.user = key.user.toString()
+                
                 return key
             })
 

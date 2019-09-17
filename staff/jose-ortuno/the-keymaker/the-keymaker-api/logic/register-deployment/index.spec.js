@@ -21,6 +21,7 @@ describe('logic - register deployment', () => {
     const latitude = 41.398406
 
     beforeEach(async () => {
+        debugger
         // user
         alias_user = `alias_user-${random.number(0, 100000)}`
         email = `email-${random.number(0, 100000)}@domain.com`
@@ -40,7 +41,8 @@ describe('logic - register deployment', () => {
     })
 
     it('should succeed on correct data', async () => {
-        const response = await registerDeployment(path, alias_deployment, status, userId, address, longitude, latitude)
+        debugger
+        const response = await registerDeployment(path, alias_deployment, address_deployment, status, userId, longitude, latitude)
         expect(response).to.exist
 
         const deployment = await Deployment.findOne({ _id: response.id })

@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 
 const { env: { DB_URL_TEST, JWT_SECRET } } = process
 
-describe('logic - retrieve key all', () => {
+describe.only('logic - retrieve key all', () => {
     before(() => database.connect(DB_URL_TEST))
 
     // user
@@ -17,8 +17,8 @@ describe('logic - retrieve key all', () => {
     let alias_user2, email2, password2, userId2, path2
 
     // deployment
-    let alias_deployment1, status1, deploymentId1
-    let alias_deployment2, status2, deploymentId2
+    let alias_deployment1, address_deployment1, status1, deploymentId1
+    let alias_deployment2, address_deployment2, status2, deploymentId2
 
     // deployment #1 Skylab
     const longitude1 = 2.199905
@@ -45,7 +45,7 @@ describe('logic - retrieve key all', () => {
     let date4, createdAt4, getValidFrom4, getValidUntil4, from4, expiry4
 
     // key
-    let _token1, _token2,  _token3, _token4 
+    let _token1, _token2, _token3, _token4
 
     beforeEach(async () => {
         /****************************************************************
@@ -61,7 +61,7 @@ describe('logic - retrieve key all', () => {
 
         const user1 = await User.create({ logo: path1, alias: alias_user1, email: email1, password: password1 })
         userId1 = user1.id
-        
+
         // user2
         alias_user2 = `alias_user-${random.number(0, 100000)}`
         email2 = `email-${random.number(0, 100000)}@domain.com`
@@ -75,29 +75,29 @@ describe('logic - retrieve key all', () => {
         DEPLOYMENT
         ****************************************************************/
         await Deployment.deleteMany()
-
+        
         // deployment1
 
         alias_deployment1 = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment1 = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment1 = `address-${random.number(0, 100000)}`
         status1 = random.boolean()
 
-        const deployment1 = await Deployment.create({ alias: alias_deployment1, status: status1, user: userId1, location: { coordinates: [longitude1, latitude1] } })
+        const deployment1 = await Deployment.create({ created_at: new Date(), alias: alias_deployment1, address: address_deployment1, status: status1, user: userId1, location: { coordinates: [longitude1, latitude1] } })
         deploymentId1 = deployment1.id
 
         // deployment2
         alias_deployment2 = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment2 = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment2 = `address-${random.number(0, 100000)}`
         status2 = random.boolean()
 
-        const deployment2 = await Deployment.create({ alias: alias_deployment2, status: status2, user: userId2, location: { coordinates: [longitude2, latitude2] } })
+        const deployment2 = await Deployment.create({ created_at: new Date(), alias: alias_deployment2, address: address_deployment2, status: status2, user: userId2, location: { coordinates: [longitude2, latitude2] } })
         deploymentId2 = deployment2.id
 
         /****************************************************************
         KEY
         ****************************************************************/
         await Key.deleteMany()
-
+        
         // key1 - user 1 - deployment 1
         alias_guest1 = `alias_guest-${random.number(0, 100000)}`
         email_guest1 = `email_guest-${random.number(0, 100000)}@domain.com`
@@ -205,29 +205,10 @@ describe('logic - retrieve key all', () => {
     })
 
     it('should succeed on correct data: user 1', async () => {
-        const deployment = [deploymentId1, deploymentId2]
         const alias_guest = [alias_guest1, alias_guest2]
         const email_guest = [email_guest1, email_guest2]
+        
         const keys = await retrieveKeyAll(userId1)
-
-        keys.forEach((key, index) => {
-            expect(key).to.exist
-            expect(key.created_at).to.exist
-            expect(key.valid_from).to.exist
-            expect(key.valid_until).to.exist
-            expect(key.status).to.equal('waiting')
-            expect(key.alias_guest).to.equal(alias_guest[index])
-            expect(key.email_guest).to.equal(email_guest[index])
-            expect(key.deployment).to.equal(deployment[index])
-            expect(key.user).to.equal(userId1)
-        })
-    })
-
-    it('should succeed on correct data: user 2', async () => {
-        const deployment = [deploymentId1, deploymentId2]
-        const alias_guest = [alias_guest3, alias_guest4]
-        const email_guest = [email_guest3, email_guest4]
-        const keys = await retrieveKeyAll(userId2)
         
         keys.forEach((key, index) => {
             expect(key).to.exist
@@ -237,7 +218,25 @@ describe('logic - retrieve key all', () => {
             expect(key.status).to.equal('waiting')
             expect(key.alias_guest).to.equal(alias_guest[index])
             expect(key.email_guest).to.equal(email_guest[index])
-            expect(key.deployment).to.equal(deployment[index])
+            expect(key.deployment).to.exist
+            expect(key.user).to.equal(userId1)
+        })
+    })
+
+    it('should succeed on correct data: user 2', async () => {
+        const alias_guest = [alias_guest3, alias_guest4]
+        const email_guest = [email_guest3, email_guest4]
+        const keys = await retrieveKeyAll(userId2)
+
+        keys.forEach((key, index) => {
+            expect(key).to.exist
+            expect(key.created_at).to.exist
+            expect(key.valid_from).to.exist
+            expect(key.valid_until).to.exist
+            expect(key.status).to.equal('waiting')
+            expect(key.alias_guest).to.equal(alias_guest[index])
+            expect(key.email_guest).to.equal(email_guest[index])
+            expect(key.deployment).to.exist
             expect(key.user).to.equal(userId2)
         })
 
