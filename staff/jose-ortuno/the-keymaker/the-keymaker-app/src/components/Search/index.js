@@ -6,7 +6,7 @@ export default function ({ onSearch }) {
         const handleQuery = (event) => {
                 event.preventDefault()
                 const query = event.target.query.value
-
+                
                 onSearch(query)
         }
 

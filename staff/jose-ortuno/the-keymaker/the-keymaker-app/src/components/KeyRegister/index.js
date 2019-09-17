@@ -6,6 +6,7 @@ import moment from 'moment'
 
 
 export default withRouter(function ({ onDate, history }) {
+    const [view, setView] = useState('register')
     const [deployments, setDeployments] = useState(undefined)
     const [valueSelect, setValueSelect] = useState(undefined)
     const [getDate, setGetDate] = useState(undefined)
@@ -17,7 +18,12 @@ export default withRouter(function ({ onDate, history }) {
         (async () => {
             const deployments = await logic.retrieveDeployments()
             setDeployments(deployments)
-            setValueSelect(deployments[0].id)
+            if(deployments.length) {
+                setValueSelect(deployments[0].id)
+                setView('register')
+            } else {
+                setView('error')
+            }
         })()
     }, [history.location])
 
@@ -46,9 +52,14 @@ export default withRouter(function ({ onDate, history }) {
         return moment(getHour, "hh:mm A").add(1, 'hours').format('HH:mm')
     }
 
+    const handleGoToRegisterDeployment = () => {
+        history.push('/deployments/register')
+    }
+
     const handleOnBack = () => history.go(-1)
 
-    return <section className="register-key">
+    return <>
+    {view === 'register' && <section className="register-key">
         <div className='filter view_navigate'>
             <p>key register | <button onClick={handleOnBack}> <i class="fas fa-chevron-left"></i> on back</button></p>
         </div>
@@ -96,5 +107,10 @@ export default withRouter(function ({ onDate, history }) {
                 <button><i class="fas fa-chevron-right"></i> save</button>
             </form>
         </section>
-    </section>
+    </section>}
+    {view === 'error' && <section>
+        <p>in order generate keys, first create deployments</p>
+        <button onClick={handleGoToRegisterDeployment} ><i class="fas fa-plus"></i> deployments</button>
+    </section>}
+    </>
 })

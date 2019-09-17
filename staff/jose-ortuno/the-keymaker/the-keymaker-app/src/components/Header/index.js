@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom'
 import logic from '../../logic'
 import './index.sass'
 
-// COMPONETS
-import Search from '../Search'
-
-export default function ({ onQuery, goOnLogout }) {
+export default function ({ goOnLogout }) {
     const [user, setUser] = useState(undefined)
 
     useEffect(() => {
@@ -19,7 +16,7 @@ export default function ({ onQuery, goOnLogout }) {
 
     return <header>
         <Link to="/deployments"><h1 className="logo">the keymaker</h1></Link>
-        <Search onSearch={onQuery} />
+
         <nav className="menu">
             <ul>
                 <li className="menu__keys"><Link to="/deployments/keys">keys</Link></li>

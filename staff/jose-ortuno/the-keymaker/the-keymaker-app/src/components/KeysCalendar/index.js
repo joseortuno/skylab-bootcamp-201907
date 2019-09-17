@@ -1,7 +1,7 @@
 import './index.sass'
 import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import moment from "moment"
 
 export default withRouter(function ({ onEvent, history }) {
@@ -27,6 +27,10 @@ export default withRouter(function ({ onEvent, history }) {
         history.push('/deployments/keys/register-key')
     }
 
+    const handleGoToRegisterDeployment = () => {
+        history.push('/deployments/register')
+    }
+
     function handleGoToNextMonth(event) {
         event.preventDefault()
         setCurrentDate(moment(currentDate).add(1, 'months'))
@@ -42,7 +46,12 @@ export default withRouter(function ({ onEvent, history }) {
             let keyDay = moment(key.valid_from).format('YYYY MMMM D')
             let currentDay = moment(dataDate).format('YYYY MMMM D')
             if(keyDay === currentDay) {
-                return <i class="fas fa-key"></i>
+                return <div onClick={event => {
+                    event.preventDefault()
+                    event.stopPropagation()
+
+                    history.push(`/deployments/keys/detail/${key.id}`)
+                }}><i class="fas fa-key"></i> {key.deployment.alias}</div>
             }
         })
     }
@@ -54,7 +63,8 @@ export default withRouter(function ({ onEvent, history }) {
                 <h2>calendar</h2>
                 <i class="fas fa-caret-left" onClick={handleGoToPreviousMonth}></i> <h3 class="month__title"> {moment(currentDate).format("MMMM")} </h3> <i class="fas fa-caret-right" onClick={handleGoToNextMonth}></i>
                 <p class="month__year">{moment(currentDate).format("YYYY")}</p>
-                <button onClick={handleGoToRegisterKey}><i class="fas fa-plus"></i> key</button>
+                <button onClick={handleGoToRegisterKey}><i class="fas fa-plus"></i> key</button> 
+                <button onClick={handleGoToRegisterDeployment}><i class="fas fa-plus"></i> deployment</button>
             </>
         )
     }
@@ -114,10 +124,16 @@ export default withRouter(function ({ onEvent, history }) {
                     eventDate = first.format("YYYY-MM-DD")
                     const dataDate = first.format()
                     days.push(
-                        <div onClick={onEvent} data-day={eventDate} class="calendar__day day">
+                        <a onClick={onEvent} data-day={eventDate} className={
+                            `calendar__day day column cell ${!dataDate.isSameMonth(formattedDate, 'month')
+                             ? "disabled"
+                             : dataDate.isSame(formattedDate, 'day') 
+                             ? "selected" 
+                             : ""
+                             }`} >
                             {formattedDate}
                             {monthKeys && <div>{handleDayKeys(dataDate)}</div>}
-                        </div>
+                        </a>
                     )
                     first = first.add(1, 'days')
                 }
@@ -130,9 +146,12 @@ export default withRouter(function ({ onEvent, history }) {
                 eventDate = first.format("YYYY-MM-DD")
                 const dataDate = first.format()
                 days.push(
-                    <a onClick={onEvent} data-day={eventDate} class="calendar__day day">
+                    <a onClick={onEvent} data-day={eventDate} className={
+                        `calendar__day day column cell ${moment(dataDate).isSame(eventDate) === true
+                         ? "selected"
+                         : "disabled" }`}>
                         {formattedDate}
-                        {monthKeys && <div>{handleDayKeys(dataDate)}</div>}
+                        {monthKeys && <Link>{handleDayKeys(dataDate)}</Link>}
                     </a>
                 )
                 first = first.add(1, 'days')

@@ -1,10 +1,11 @@
-const API_KEY_GOOGLE_MAPS = 'AIzaSyDdx1PrjoxeKY7po8NgDapK9Vd4J8GLFlI'
+import { validate } from 'the-keymaker-utils'
+const REACT_APP_API_KEY_GOOGLE_MAPS = process.env.REACT_APP_API_KEY_GOOGLE_MAPS
+
 
 export default function async(address) {
-    debugger
     // validate fields
     return (async () => {
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${API_KEY_GOOGLE_MAPS}`, {
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${REACT_APP_API_KEY_GOOGLE_MAPS}`, {
             method: 'get'
         })
 

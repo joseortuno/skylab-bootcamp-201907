@@ -1,5 +1,5 @@
 import './index.sass'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import logic from '../../logic'
 import { Route, withRouter } from 'react-router-dom'
 
@@ -10,13 +10,8 @@ import Home from '../Home'
 import AccessDeployment from '../AccessDeployment'
 
 export default withRouter(function ({ history }) {
-  const [view, setView] = useState(logic.isUserLogged() ? 'home' : undefined)
 
-  const handleBack = () => {
-    setView(undefined)
-
-    history.push('/')
-  }
+  const handleBack = () => history.push('/')
 
   const handleRegister = async (alias, email, password, repassword) => {
     try {
@@ -32,7 +27,6 @@ export default withRouter(function ({ history }) {
     try {
       await logic.authenticateUser(email, password)
 
-      setView('home')
       history.push('/deployments')
     } catch ({ message }) {
       console.log('fail login', message)
@@ -41,17 +35,11 @@ export default withRouter(function ({ history }) {
 
   const handleGoToRegister = event => {
     event.preventDefault()
-
-    setView('register')
-
     history.push('/register')
   }
 
   const handleGoToLogin = event => {
     event.preventDefault()
-
-    setView('login')
-
     history.push('/login')
   }
 
@@ -62,9 +50,6 @@ export default withRouter(function ({ history }) {
   }
 
   return <>
-
-
-
     <div className="container">
       <Route path="/access/:id" render={props => <AccessDeployment />} />
 

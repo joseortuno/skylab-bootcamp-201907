@@ -1,9 +1,10 @@
-// const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+import { validate } from 'the-keymaker-utils'
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function (keyId, longitude, latitude) {
     // validate fields
     return (async () => {
-        const response = await fetch(`http://localhost:8080/api/key/${keyId}/longitude/${longitude}/latitude/${latitude}`, {
+        const response = await fetch(`${REACT_APP_API_URL}/key/${keyId}/longitude/${longitude}/latitude/${latitude}`, {
             method: 'get'
         })
 

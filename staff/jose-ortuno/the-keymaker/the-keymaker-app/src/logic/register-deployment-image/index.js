@@ -1,4 +1,5 @@
-// const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+import { validate } from 'the-keymaker-utils'
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function (deploymentId, image) {
     //TODO:  validate fields
@@ -7,7 +8,7 @@ export default function (deploymentId, image) {
     formData.append('image', image);
 
     return (async () => {
-        const response = await fetch(`http://localhost:8080/api/users/deployment/${deploymentId}/upload`, {
+        const response = await fetch(`${REACT_APP_API_URL}/users/deployment/${deploymentId}/upload`, {
             method: 'post',
             headers: {
                 'authorization': `bearer ${this.__token__}`

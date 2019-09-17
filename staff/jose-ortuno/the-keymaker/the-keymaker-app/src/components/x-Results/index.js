@@ -3,32 +3,32 @@ import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
 import { withRouter, Link } from 'react-router-dom'
 import { random } from 'the-keymaker-utils'
-import moment from "moment"
 
 export default withRouter(function ({ onResults, history }) {
     const [keys, setKeys] = useState(undefined)
     const [deployments, setDeployments] = useState(undefined)
-
+console.log(onResults)
     useEffect(() => {
         (async () => {
             debugger
-            const keys = await logic.searchKeys(onResults)
+            // const keys = await logic.searchKeys(onResults)
             debugger
-            if(!keys === undefined){
-                const keysArr = keys.sort(function (a, b) {
-                    return (b.created_at - a.created_at)
-                })
-                setKeys(keysArr)
-            }
+            // debugger
+            // if(!keys === undefined){
+            //     const keysArr = keys.sort(function (a, b) {
+            //         return (b.created_at - a.created_at)
+            //     })
+            //     setKeys(keysArr)
+            // }
 
-            const deployments = await logic.searchDeployments(onResults)
-            if(!deployments.length === 0) {
-                setDeployments(deployments)
-                const deploymentsArr = deployments.sort(function (a, b) {
-                    return (b.created_at - a.created_at)
-                })
-                setDeployments(deploymentsArr)
-            }
+            // const deployments = await logic.searchDeployments(onResults)
+            // if(!deployments.length === 0) {
+            //     setDeployments(deployments)
+            //     const deploymentsArr = deployments.sort(function (a, b) {
+            //         return (b.created_at - a.created_at)
+            //     })
+            //     setDeployments(deploymentsArr)
+            // }
 
         })()
     }, [])

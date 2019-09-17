@@ -1,9 +1,11 @@
-// const REACT_APP_API_URL = process.env.REACT_APP_API_URL
+import { validate } from 'the-keymaker-utils'
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function (query) {
     // validate fields
+    debugger
     return (async () => {
-        const response = await fetch(`http://localhost:8080/api/keys/search/${query}`, {
+        const response = await fetch(`${REACT_APP_API_URL}/keys/search/${query}`, {
             method: 'get',
             headers: {
                 authorization: `bearer ${this.__token__}`
@@ -16,8 +18,8 @@ export default function (query) {
             throw Error(error)
         }
 
-        const { keys }  = await response.json()
-
-        return keys
+        const { key }  = await response.json()
+        
+        return key
      })()
 }

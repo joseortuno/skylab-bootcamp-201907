@@ -1,5 +1,5 @@
-// const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 import { validate } from 'the-keymaker-utils'
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function (validFrom, validUntil, aliasGuest, emailGuest, deploymentId) {
     validate.string(aliasGuest, 'alias guest')
@@ -7,7 +7,7 @@ export default function (validFrom, validUntil, aliasGuest, emailGuest, deployme
     validate.string(deploymentId, 'deployment id')
 
     return (async () => {
-        const response = await fetch(`http://localhost:8080/api/key`, {
+        const response = await fetch(`${REACT_APP_API_URL}/key`, {
             method: 'post',
             headers: {
                 'content-type': 'application/json', 

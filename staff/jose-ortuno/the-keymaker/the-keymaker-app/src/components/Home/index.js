@@ -12,18 +12,19 @@ import KeyDetail from '../KeyDetail'
 import KeyRegister from '../KeyRegister'
 import KeysCalendar from '../KeysCalendar'
 import Header from '../Header'
-import Results from '../Results'
 
 export default withRouter(function ({ history }) {
     const [event, setEvent] = useState(undefined)
     const [keys, setKeys] = useState(undefined)
-    const [query, setQuery] = useState(undefined)
 
     useEffect(() => {
         (async () => {
-            const keys = await logic.retrieveKeys()
-
-            setKeys(keys)
+            try {
+                const keys = await logic.retrieveKeys()
+                setKeys(keys)
+            } catch ({message}) {
+                console.error(message)
+            }
         })()
     }, [history.location])
 
@@ -33,13 +34,6 @@ export default withRouter(function ({ history }) {
         history.push('/deployments/keys/register')
     }
 
-    const handleQuery = (query) => {
-        debugger
-        setQuery(query)
-        history.push('/deployments/results')
-    }
-
-
     const handleLogout = () => {
         logic.logUserOut()
         history.push('/')
@@ -47,7 +41,7 @@ export default withRouter(function ({ history }) {
 
 
     return <>
-        <Header goOnLogout={handleLogout} onQuery={handleQuery} />
+        <Header goOnLogout={handleLogout} />
         <main>
             <Route exact path="/deployments" render={() => <Deployments />} />
             <Route path="/deployments/detail/:id" render={props => <DeploymentDetail id={props.match.params.id} />} />
@@ -55,8 +49,7 @@ export default withRouter(function ({ history }) {
             <Route exact path="/deployments/keys" render={() => <KeysAll />} />
             <Route path="/deployments/keys/detail/:id" render={props => <KeyDetail id={props.match.params.id} />} />
             <Route path="/deployments/keys/register" render={() => <KeyRegister onDate={event} />} />
-            <Route path="/deployments/keys/calendar" render={() => keys && <KeysCalendar onKeys={keys} onEvent={handleEvent} />} />
-            <Route path="/deployments/results" render={() => query && <Results onResults={query} />} />
+            <Route path="/deployments/keys/calendar" render={() => keys && <KeysCalendar onEvent={handleEvent} />} />
         </main>
     </>
 })

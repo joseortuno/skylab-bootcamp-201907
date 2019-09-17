@@ -2,11 +2,16 @@ import './index.sass'
 import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
 import { withRouter, Link } from 'react-router-dom'
-import moment from 'moment'
+
+// COMPONETS
+import Search from '../Search'
+import DeploymentView from '../DeploymentView'
 
 export default withRouter(function ({ history }) {
     const [deployments, setDeployments] = useState(undefined)
-    
+    const [deploymentResults, setDeploymentResults] = useState(undefined)
+    const [view, setView] = useState('deployments')
+
     useEffect(() => {
         (async () => {
             const deployments = await logic.retrieveDeployments()
@@ -22,25 +27,45 @@ export default withRouter(function ({ history }) {
         history.push('/deployments/register')
     }
 
+    const handleViewDeploymentsAll = () => {
+        setView('deployments')
+    }
+
+    const handleSearchQuery = async (query) => {
+        try {
+            const deploymentResults = await logic.searchDeployments(query)
+            setDeploymentResults(deploymentResults)
+            setView('results')
+        } catch ({ message }) {
+            console.error(message)
+        }
+    }
+
     return <section className='deployments view'>
-        <div className='filter view__navigate'>
-            <p>filter deployments: <button>active</button> <button>inactive</button> <button>all</button> | <button onClick={handleGoToRegisterDeployment}><i class="fas fa-plus"></i> deployment</button></p>
+        <div className='view__navigate'>
+            <p>search deployment: </p>
+            <Search onSearch={handleSearchQuery} />
+            {view === 'result' && <button onClick={handleViewDeploymentsAll} ><i class="fas fa-plus"></i> all</button>}
+            <i class="fas fa-grip-lines-vertical"></i>
+            <button onClick={handleGoToRegisterDeployment}><i class="fas fa-plus"></i> deployment</button>
         </div>
-        {deployments && <div className='view__list'>
-            <div className="view__var" key={Math.random()}>
-                <div className='view__title' key={Math.random()}>deployment</div>
-                <div className='view__title' key={Math.random()}>image</div>
-                <div className='view__title' key={Math.random()}>created at</div>
-            </div>
-            {deployments.map(deployment => {
-                return <Link key={Math.random()} to={`/deployments/detail/${deployment.id}`}>
-                    <div className='view__item' key={Math.random()}>{deployment.alias}</div>
-                    <div className='view__item' key={Math.random()}>{deployment.logo === '/img/user' && 'no' || 'yes'}</div>
-                    <div className='view__item' key={Math.random()}>{deployment.created_at}</div>
-                    <div className='view__item' key={deployment.id}><button ><i class="fas fa-plus"></i> edit</button></div>
-                    <div className='view__item' key={Math.random()}><button><i class="fas fa-plus"></i> key generator</button></div>
+
+        {view === 'deployments' && <>
+            {deployments && deployments.map(deployment => {
+                return <Link className="view__element" key={deployment.id} to={`/deployments/detail/${deployment.id}`} >
+                    <DeploymentView onDeployment={deployment} />
                 </Link>
-            })}
-        </div> || <p>there are no registered deployments</p>}
+            }) || <p><i class="fas fa-comment-dots"></i> there are no registered deployments</p>}
+        </>}
+
+        {view === 'results' && <>
+            <h2>results:</h2>
+            {deploymentResults && deployments.map(deployment => {
+                return <Link className="view__element" key={deployment.id} to={`/deployments/detail/${deployment.id}`} >
+                    <DeploymentView onDeployment={deployment} />
+                </Link>
+            }) || <p><i class="fas fa-comment-dots"></i> there are no results to search</p>}
+        </>}
+
     </section>
 })
