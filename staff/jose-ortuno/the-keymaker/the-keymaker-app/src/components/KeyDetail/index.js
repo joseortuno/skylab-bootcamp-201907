@@ -1,8 +1,10 @@
-import './index.sass'
 import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
-import { random } from 'the-keymaker-utils'
+
+
+// COMPONENTS
+import KeyView from '../KeyView'
 
 export default withRouter(function ({ history, id }) {
     const [key, setKey] = useState(undefined)
@@ -12,7 +14,7 @@ export default withRouter(function ({ history, id }) {
             try {
                 const key = await logic.retrieveKey(id)
                 setKey(key)
-            } catch ({message}) {
+            } catch ({ message }) {
                 console.error(message)
             }
         })()
@@ -24,21 +26,17 @@ export default withRouter(function ({ history, id }) {
 
     const handleOnBack = () => history.go(-1)
 
-    return <section className='keys view'>
-        <div className='filter view_navigate'>
+    return <section className='key view'>
+        <section className='view__navigate'>
             <p> detail key |  <button onClick={handleOnBack}> <i className="fas fa-chevron-left"></i> on back</button> | {key && <button onClick={event => {
                 event.preventDefault()
 
-                history.push(`/deployments/keys/${key.deployment}`)
+                history.push(`/deployments/detail/${key.deployment}`)
             }}> <i className="fas fa-chevron-left"></i> go deployment</button>} <button onClick={handleGoToRegisterKey}> <i className="fas fa-plus"></i> key</button></p>
-        </div>
-        {key && <ul className='view__ul'>
-                <li className='view__li' key={`${random.number(0, 99)}-${key.id}`}>guest: {key.alias_guest}</li>
-                <li className='view__li' key={`${random.number(0, 99)}-${key.id}`}>valid from: {key.valid_from}</li>
-                <li className='view__li' key={`${random.number(0, 99)}-${key.id}`}>valid until: {key.valid_until}</li>
-                <li className={`view__li keys__status--${key.status}`} key={`${random.number(0, 99)}-${key.id}`}>status: {key.status}</li>
-        </ul>}
+        </section>
+        {key && <section className="key__detail"> <KeyView onKey={key} />
+        </section>}
     </section>
-        })
+})
 
        //  TODO: enseñar el piso con populate

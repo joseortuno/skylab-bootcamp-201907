@@ -21,11 +21,9 @@ describe('logic - register user', () => {
     })
 
     it('should succeed on correct data', async () => {
-        debugger
         const response = await registerUser(alias, email, password, password)
 
         expect(response).toBeUndefined()
-        debugger
         const user = await User.findOne({ email })
         
         expect(user).toBeDefined()

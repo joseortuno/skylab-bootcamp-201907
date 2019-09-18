@@ -1,4 +1,3 @@
-import './index.sass'
 import React, { useState } from 'react'
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
@@ -10,19 +9,14 @@ export default withRouter(function ({ history }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-
         const { target: { logo: { files: [logo] }, name: { value: name }, address: { value: address } } } = event
-        debugger
         const { getAddress, coordinates: { lat, lng } } = await logic.getLocation(address)
-        debugger
         setData({ logo, name, getAddress, lng, lat })
         setView('confirm')
     }
 
     const handleConfirm = () => {
-        debugger
         const { logo, name, getAddress, lng, lat } = data
-        debugger
         handleRegisterDeployment(logo, name, valueSelect, getAddress, lng, lat)
     }
 
@@ -47,27 +41,16 @@ export default withRouter(function ({ history }) {
     const handleOnBack = () => history.go(-1)
 
     return <section className="register-deployment">
-        <div className='filter view_navigate'>
+        <div className='filter view__navigate'>
             <p>deployment register | <button onClick={handleOnBack}> <i class="fas fa-chevron-left"></i> on back</button></p>
         </div>
-        {view === 'form' && <form method='post' onSubmit={handleSubmit} encType="multipart/form-data">
-            <label>
-                image:
-                <input type="file" name="logo" ></input>
-            </label>
-            <label>
-                name:
-                <input type="text" name="name" placeholder="name" required />
-            </label>
-            <label>
-                location address:
-                <input type="text" name="address" placeholder="address" />
-            </label>
-            {/* <label>
-                location coordinates:
-                <input type="text" name="longitude" placeholder="longitude" />
-                <input type="text" name="latitude" placeholder="latitude" />
-            </label> */}
+        {view === 'form' && <form className='register-deployment__form' method='post' onSubmit={handleSubmit} encType="multipart/form-data">
+            <label>image:</label>
+            <input type="file" name="logo" ></input>
+            <label>name:</label>
+            <input type="text" name="name" placeholder="name" required />
+            <label>location address:</label>
+            <input type="text" name="address" placeholder="address" />
             <select value={valueSelect} onChange={event => {
                 event.preventDefault()
                 const element = event.target.value

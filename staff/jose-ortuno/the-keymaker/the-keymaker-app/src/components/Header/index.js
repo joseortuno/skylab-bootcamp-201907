@@ -14,16 +14,16 @@ export default function ({ goOnLogout }) {
         })()
     }, [])
 
-    return <header>
-        <Link to="/deployments"><h1 className="logo">the keymaker</h1></Link>
+    return <header className="header header__home">
+        <Link to="/deployments"><h1 className="header__logo">the keymaker</h1></Link>
 
         <nav className="menu">
             <ul>
-                <li className="menu__keys"><Link to="/deployments/keys">keys</Link></li>
-                <li className="menu__calendar"><Link to="/deployments/keys/calendar">calendar</Link></li>
-                <li className="menu__deployments"><Link to="/deployments">deployments</Link></li>
-                <li className="menu__user">{user && <img src={user.logo} />}</li>
-                <li><button onClick={goOnLogout}><i class="fas fa-chevron-right"></i> logout</button></li>
+                <li className="menu__button"><Link to="/deployments"><i className="fas fa-home"></i></Link></li>
+                <li className="menu__button"><Link  to="/deployments/keys"><i className="fas fa-key"></i></Link></li>
+                <li className="menu__button"><Link to="/deployments/keys/calendar"><i className="fas fa-calendar-times"></i></Link></li>
+                <li className="menu__image">{user && <img src={user.logo} />}</li>
+                <li className="menu__button"><a  href="" onClick={goOnLogout}><i className="fas fa-sign-out-alt"></i></a></li>
             </ul>
         </nav>
     </header>

@@ -19,7 +19,6 @@ describe('logic-authenticate user', ()=>{
                 body: JSON.stringify({ name, surname, email, password })
             })
             // const {email: email2, password: password2} = response
-            debugger
             await fetch(`${REACT_APP_API_URL}/auth`, {
                 method: 'post', 
                 headers: {'content-type':'application/json'},
@@ -30,7 +29,6 @@ describe('logic-authenticate user', ()=>{
     it('should succeed on correct data', async () => {
         
         const user = await authenticateUser(email, password)
-        debugger
         expect(user).toBeDefined()
         const id = user.id
         const token = user.token

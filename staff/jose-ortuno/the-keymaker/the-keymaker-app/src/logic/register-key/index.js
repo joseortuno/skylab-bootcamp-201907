@@ -2,6 +2,7 @@ import { validate } from 'the-keymaker-utils'
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function (validFrom, validUntil, aliasGuest, emailGuest, deploymentId) {
+    debugger
     validate.string(aliasGuest, 'alias guest')
     validate.string(emailGuest, 'email guest')
     validate.string(deploymentId, 'deployment id')

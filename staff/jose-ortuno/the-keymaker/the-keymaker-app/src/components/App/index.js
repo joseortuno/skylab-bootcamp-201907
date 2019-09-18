@@ -53,7 +53,7 @@ export default withRouter(function ({ history }) {
     <div className="container">
       <Route path="/access/:id" render={props => <AccessDeployment />} />
 
-      <Route exact path="/" render={() => !logic.isUserLogged() ? <header className="landing__header" >
+      <Route exact path="/" render={() => !logic.isUserLogged() ? <header >
         <nav>
           <ul>
             <li><a href="" onClick={handleGoToRegister}>Register</a></li>
@@ -62,16 +62,12 @@ export default withRouter(function ({ history }) {
         </nav>
       </header> : history.push('/deployments')} />
 
-      {!logic.isUserLogged() && <main className="landing__main">
+      {!logic.isUserLogged() && <main>
         <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
         <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
       </main>}
 
       <Route path="/deployments" render={() => logic.isUserLogged() ? <Home onBack={handleBack} onLogout={handleLogout} /> : history.push('/')} />
-
-      <footer>
-        <p><i class="fas fa-rocket"></i> made by jose ortuño</p>
-      </footer>
     </div>
   </>
 })

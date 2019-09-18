@@ -1,4 +1,3 @@
-import './index.sass'
 import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
@@ -25,7 +24,6 @@ export default withRouter(function ({ match: { params: { id } } }) {
 
     const handleLocation = (event) => {
         event.preventDefault()
-        debugger
         let latitude, longitude
         navigator.geolocation.getCurrentPosition(function (position) {
             latitude = position.coords.latitude
@@ -35,7 +33,6 @@ export default withRouter(function ({ match: { params: { id } } }) {
     }
 
     const handleUseKey = async (longitude, latitude) => {
-        debugger
         try {
             const { deployment } = await logic.useKey(id, longitude, latitude)
             if (deployment.status === 'close') setView('close')

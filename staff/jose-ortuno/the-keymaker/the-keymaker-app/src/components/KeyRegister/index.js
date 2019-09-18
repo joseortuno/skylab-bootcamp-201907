@@ -1,4 +1,3 @@
-import './index.sass'
 import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
@@ -18,9 +17,10 @@ export default withRouter(function ({ onDate, history }) {
         (async () => {
             const deployments = await logic.retrieveDeployments()
             setDeployments(deployments)
-            if(deployments.length) {
+            if (deployments.length) {
                 setValueSelect(deployments[0].id)
                 setView('register')
+                if (moment(onDate).diff(moment(new Date), 'days') < 0) setView('error date')
             } else {
                 setView('error')
             }
@@ -31,7 +31,7 @@ export default withRouter(function ({ onDate, history }) {
         event.preventDefault()
 
         const { target: { validFromDate: { value: validFromDate }, validFromTime: { value: validFromTime }, validUntilDate: { value: validUntilDate }, validUntilTime: { value: validUntilTime }, alias: { value: alias }, email: { value: email } } } = event
-
+        debugger
         const validFrom = new Date(`${validFromDate} ${validFromTime}`)
         const validUntil = new Date(`${validUntilDate} ${validUntilTime}`)
 
@@ -59,14 +59,13 @@ export default withRouter(function ({ onDate, history }) {
     const handleOnBack = () => history.go(-1)
 
     return <>
-    {view === 'register' && <section className="register-key">
-        <div className='filter view_navigate'>
-            <p>key register | <button onClick={handleOnBack}> <i class="fas fa-chevron-left"></i> on back</button></p>
-        </div>
-        <section>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    valid from:
+        {view === 'register' && <section className="register-key">
+            <div className='view__navigate'>
+                <p>key register | <button onClick={handleOnBack}> <i class="fas fa-chevron-left"></i> on back</button></p>
+            </div>
+            <section>
+                <form className="register-key__form" onSubmit={handleSubmit}>
+                    <label>valid from:</label>
                     <input type="date" name="validFromDate" value={onDate} onChange={event => {
                         event.preventDefault()
                         setGetDate(event.target.value)
@@ -75,9 +74,7 @@ export default withRouter(function ({ onDate, history }) {
                         event.preventDefault()
                         setGetHour(event.target.value)
                     }} required />
-                </label>
-                <label>
-                    valid until:
+                    <label>valid until:</label>
                     <input type="date" name="validUntilDate" value={onDate || getDate2 || getDate} onChange={event => {
                         event.preventDefault()
                         setGetDate2(event.target.value)
@@ -86,14 +83,10 @@ export default withRouter(function ({ onDate, history }) {
                         event.preventDefault()
                         setGetHour2(event.target.value)
                     }} required />
-                </label>
-                <label>
-                    guest:
-                <input type="text" name="alias" placeholder="name" required />
+                    <label>guest:</label>
+                    <input type="text" name="alias" placeholder="name" required />
                     <input type="email" name="email" placeholder="email" required />
-                </label>
-                <label>
-                    deployment:
+                    <label>deployment:</label>
                     {deployments && <select onChange={event => {
                         event.preventDefault()
                         event.target.value ? setValueSelect(event.target.value) : setValueSelect(deployments[0].id)
@@ -103,14 +96,17 @@ export default withRouter(function ({ onDate, history }) {
                         }
                         )}
                     </select> || <p>there are no deployments</p>}
-                </label>
-                <button><i class="fas fa-chevron-right"></i> save</button>
-            </form>
-        </section>
-    </section>}
-    {view === 'error' && <section>
-        <p>in order generate keys, first create deployments</p>
-        <button onClick={handleGoToRegisterDeployment} ><i class="fas fa-plus"></i> deployments</button>
-    </section>}
+                    <button><i class="fas fa-chevron-right"></i> save</button>
+                </form>
+            </section>
+        </section>}
+        {view === 'error' && <section>
+            <p>in order generate keys, first create deployments</p>
+            <button onClick={handleGoToRegisterDeployment} ><i class="fas fa-plus"></i> deployments</button>
+        </section>}
+        {view === 'error date' && <section>
+            <p>you have chosen a date before the current one. try again</p>
+            <button onClick={handleOnBack} ><i class="fas fa-chevron-right"></i> return</button>
+        </section>}
     </>
 })

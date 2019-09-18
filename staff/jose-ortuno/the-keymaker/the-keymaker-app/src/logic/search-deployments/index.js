@@ -17,8 +17,8 @@ export default function (query) {
             throw Error(error)
         }
 
-        const { keys }  = await response.json()
+        const { deployment } = await response.json()
 
-        return keys
-     })()
+        return deployment
+    })()
 }

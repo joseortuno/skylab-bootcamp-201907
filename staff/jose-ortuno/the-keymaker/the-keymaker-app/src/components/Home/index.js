@@ -22,7 +22,7 @@ export default withRouter(function ({ history }) {
             try {
                 const keys = await logic.retrieveKeys()
                 setKeys(keys)
-            } catch ({message}) {
+            } catch ({ message }) {
                 console.error(message)
             }
         })()
@@ -41,8 +41,8 @@ export default withRouter(function ({ history }) {
 
 
     return <>
-        <Header goOnLogout={handleLogout} />
-        <main>
+        <Header className="home-header" goOnLogout={handleLogout} />
+        <main className="home-main">
             <Route exact path="/deployments" render={() => <Deployments />} />
             <Route path="/deployments/detail/:id" render={props => <DeploymentDetail id={props.match.params.id} />} />
             <Route path="/deployments/register" render={() => <DeploymentRegister />} />
@@ -51,5 +51,8 @@ export default withRouter(function ({ history }) {
             <Route path="/deployments/keys/register" render={() => <KeyRegister onDate={event} />} />
             <Route path="/deployments/keys/calendar" render={() => keys && <KeysCalendar onEvent={handleEvent} />} />
         </main>
+        <footer className="home-footer">
+            <p><i className="fas fa-rocket"></i> made by jose ortuño</p>
+        </footer>
     </>
 })

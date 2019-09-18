@@ -1,4 +1,3 @@
-import './index.sass'
 import React from 'react'
 
 export default function ({ onBack, onRegister }) {

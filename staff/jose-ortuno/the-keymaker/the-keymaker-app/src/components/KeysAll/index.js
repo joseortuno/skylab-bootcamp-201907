@@ -1,4 +1,3 @@
-import './index.sass'
 import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
 import { withRouter, Link } from 'react-router-dom'
@@ -44,36 +43,42 @@ export default withRouter(function ({ history }) {
             setKeyResults(keyResults)
             setView('results')
         } catch ({ message }) {
+            if (message === 'no results') setView('results')
             console.error(message)
         }
     }
 
     return <section className='keys view'>
-        <div className='view__navigate'>
-            <p>search keys: </p> 
-            <Search onSearch={handleSearchQuery} />  
-            {view === 'results' && <button onClick={handleViewKeysAll} ><i class="fas fa-plus"></i> all</button>} 
-            <i class="fas fa-grip-lines-vertical"></i>  
-            <button onClick={handleGoToRegisterKey}><i class="fas fa-plus"></i> key</button> 
-            <button onClick={handleGoToCalendar}><i class="fas fa-chevron-left"></i> calendar</button>
+        <div className='view__navigate navigate__search'>
+            <div className="navigate__item">
+                <p>keys:  </p>
+                <button onClick={handleGoToRegisterKey}><i class="fas fa-plus"></i> key</button>
+                <button onClick={handleGoToCalendar}><i class="fas fa-chevron-left"></i> calendar</button>
+            </div>
+            <div className="navigate__item">
+                <p>search keys: </p>
+                <Search onSearch={handleSearchQuery} />
+                {view === 'results' && <button onClick={handleViewKeysAll} ><i class="fas fa-plus"></i> all</button>}
+            </div>
         </div>
+        {view === 'results' && <h2>results:</h2>}
+        <div className="view__elements">
+            {view === 'keys' && <>
+                {keys && keys.map(key => {
+                    return <Link className="view__element" key={key.id} to={`/deployments/keys/detail/${key.id}`} >
+                        <KeyView onKey={key} />
+                    </Link>
+                }) || <p><i class="fas fa-comment-dots"></i> there are no registered keys</p>}
+            </>}
 
-        {view === 'keys' && <>
-            {keys && keys.map(key => {
-                return <Link className="view__element" key={key.id} to={`/deployments/keys/detail/${key.id}`} >
-                    <KeyView onKey={key} />
-                </Link>
-            }) || <p><i class="fas fa-comment-dots"></i> there are no registered keys</p>}
-        </>}
-
-        {view === 'results' && <>
-        <h2>results:</h2>
-            {keyResults && keys.map(key => {
-                return <Link className="view__element" key={key.id} to={`/deployments/keys/detail/${key.id}`} >
-                    <KeyView onKey={key} />
-                </Link>
-            }) || <p><i class="fas fa-comment-dots"></i> there are no results to search</p>}
-        </>}
+            {view === 'results' && <>
+                {keyResults && keys.map(key => {
+                    return <Link className="view__element" key={key.id} to={`/deployments/keys/detail/${key.id}`} >
+                        <KeyView onKey={key} />
+                    </Link>
+                }) || <p><i class="fas fa-comment-dots"></i> there are no results to search</p>}
+            </>}
+        </div>
 
     </section>
 })

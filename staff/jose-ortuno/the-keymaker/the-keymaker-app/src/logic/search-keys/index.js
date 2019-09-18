@@ -3,7 +3,6 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function (query) {
     // validate fields
-    debugger
     return (async () => {
         const response = await fetch(`${REACT_APP_API_URL}/keys/search/${query}`, {
             method: 'get',

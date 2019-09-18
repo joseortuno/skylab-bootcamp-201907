@@ -1,8 +1,10 @@
-import './index.sass'
 import React, { useState, useEffect } from 'react'
 import logic from '../../logic'
 import { withRouter } from 'react-router-dom'
 import { random } from 'the-keymaker-utils'
+
+// COMPONENTS
+import DeploymentViewDetail from '../DeploymentViewDetail'
 
 export default withRouter(function ({ history, id }) {
     const [deployment, setDeployment] = useState(undefined)
@@ -21,14 +23,9 @@ export default withRouter(function ({ history, id }) {
     const handleOnBack = () => history.go(-1)
 
     return <section className='deployments view'>
-        <div className='filter view_navigate'>
-            <p>deployment detail | <button onClick={handleOnBack}> <i class="fas fa-chevron-left"></i> on back</button> | <button onClick={handleGoToRegisterDeployment}> <i class="fas fa-plus"></i> deployment</button></p>
+        <div className='view__navigate'>
+            <p>deployment detail  | </p> <button onClick={handleOnBack}> <i class="fas fa-chevron-left"></i> on back</button> | <button onClick={handleGoToRegisterDeployment}> <i class="fas fa-plus"></i> deployment</button>
         </div>
-        {deployment && <ul className='view__ul'>
-        <li className='view__li' key={`${random.number(0, 99)}-${deployment.id}`}>deployment: <img src={deployment.logo} /></li>
-        <li className='view__li' key={`${random.number(0, 99)}-${deployment.id}`}>deployment: {deployment.alias}</li>
-        <li className='view__li' key={`${random.number(0, 99)}-${deployment.id}`}>location: longitude:{deployment.location.longitude}, latitude: {deployment.location.longitude}</li>
-        <li className={`view__li deployments__status--${deployment.status}`} key={`${random.number(0, 99)}-${deployment.id}`}>status: {deployment.status === true && 'active' || 'inactive'}</li>
-    </ul>}
+        {deployment && <DeploymentViewDetail onDeployment={deployment} />}
     </section>
 })
