@@ -7,7 +7,7 @@ const { random } = require('the-keymaker-utils')
 
 const { env: { DB_URL_TEST } } = process
 
-describe('logic - register key', () => {
+describe.only('logic - register key', () => {
     before(() => database.connect(DB_URL_TEST))
 
     // user
@@ -25,9 +25,29 @@ describe('logic - register key', () => {
     const alias_guest2 = `jose`
     const email_guest2 = `joseantortunorioja@gmail.com`
 
-    // date key 0
+    // date key 0.1
     let validFrom = new Date('2019-09-06 11:00:00')
     let validUntil = new Date('2019-09-06 12:00:00')
+
+    // date key 0.2
+    let validFromA = new Date('2019-09-06 11:00:00')
+    let validUntilA = new Date('2019-09-06 12:00:00')
+
+    // date key 0.3
+    let validFromB = new Date('2019-09-06 10:30:00')
+    let validUntilB = new Date('2019-09-06 12:30:00')
+
+    // date key 0.4
+    let validFromC = new Date('2019-09-06 10:30:00')
+    let validUntilC = new Date('2019-09-06 11:30:00')
+ 
+    // date key 0.5
+    let validFromD = new Date('2019-09-06 10:30:00')
+    let validUntilD = new Date('2019-09-06 12:30:00')
+    
+    // date key 0.6
+    let validFromE = new Date('2019-09-06 11:00:00')
+    let validUntilE = new Date('2019-09-06 12:00:00')
 
     // date key 1
     let validFrom1 = new Date('2019-09-06 12:00:00')
@@ -59,11 +79,11 @@ describe('logic - register key', () => {
 
         // deployment
         alias_deployment = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment = `address-${random.number(0, 100000)}`
         status = random.boolean()
 
         await Deployment.deleteMany()
-        const deployment = await Deployment.create({ created_at: createdAt, logo, alias: alias_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
+        const deployment = await Deployment.create({ created_at: createdAt, logo, alias: alias_deployment, address: address_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
         deploymentId = deployment.id
 
         // guest random
@@ -74,7 +94,7 @@ describe('logic - register key', () => {
 
     })
     
-    xit('should succeed on correct data', async () => {
+    it('should succeed on correct data', async () => {
         
         const { id, token, email } = await registerKey(validFrom, validUntil, alias_guest, email_guest, deploymentId, userId)
         expect(id).to.exist
@@ -97,7 +117,7 @@ describe('logic - register key', () => {
         expect(key.user._id.toString()).to.equal(userId)
     })
 
-    xit('should succeed by sending two keys in adjacent hours', async () => {
+    it('should succeed by sending two keys in adjacent hours', async () => {
         // Key 1
         const { id: idKey1, token: tokenKey1, email } = await registerKey(validFrom, validUntil, alias_guest, email_guest, deploymentId, userId)
     
@@ -119,7 +139,7 @@ describe('logic - register key', () => {
         expect(key1.email_guest).to.equal(email_guest)
         expect(key1.deployment._id.toString()).to.equal(deploymentId)
         expect(key1.user._id.toString()).to.equal(userId)
-        
+
         // Key 2
         const { id: idKey2, token: tokenKey2, email: _email } = await registerKey(validFrom1, validUntil1, alias_guest, email_guest, deploymentId, userId)
         
@@ -143,7 +163,7 @@ describe('logic - register key', () => {
         expect(key2.user._id.toString()).to.equal(userId)
     })
 
-    xit('should not succeed by sending two keys at equal times 1', async () => {
+    it('should not succeed by sending two keys at equal times 1', async () => {
         // Key 1
         const { id: idKey1, token: tokenKey1, email } = await registerKey(validFrom, validUntil, alias_guest, email_guest, deploymentId, userId)
     
@@ -175,7 +195,7 @@ describe('logic - register key', () => {
         }
     })
 
-    xit('should not succeed by sending two keys at equal times 2', async () => {
+    it('should not succeed by sending two keys at equal times 2', async () => {
         // Key 1
         const { id: idKey1, token: tokenKey1, email } = await registerKey(validFrom, validUntil, alias_guest, email_guest, deploymentId, userId)
     
@@ -208,19 +228,79 @@ describe('logic - register key', () => {
     })
 
     it('should send an email with the key', async () => {
-        debugger
+        
         const { id, token, email } = await registerKey(validFrom, validUntil, alias_guest1, email_guest1, deploymentId, userId)
-        debugger
+        
         expect(id).to.exist
         expect(token).to.exist
         expect(email).to.equal('email sent correctly')
 
         const { id: _id, token: _token, email: _email } = await registerKey(validFrom1, validUntil1, alias_guest2, email_guest2, deploymentId, userId)
-        debugger
+        
         expect(_id).to.exist
         expect(_token).to.exist
         expect(_email).to.equal('email sent correctly')
         
+    })
+
+    it('should match on time: error A', async () => {
+        debugger
+        await registerKey(validFrom, validUntil, alias_guest1, email_guest1, deploymentId, userId)
+        debugger
+        try {
+            await registerKey(validFromA, validUntilA, alias_guest1, email_guest1, deploymentId, userId)
+        } catch (error) {
+            expect(error).to.equal('sorry, the requested time slot is busy')
+        }
+
+    })
+
+    it('should match on time: error B', async () => {
+        debugger
+        await registerKey(validFrom, validUntil, alias_guest1, email_guest1, deploymentId, userId)
+        debugger
+        try {
+            await registerKey(validFromB, validUntilB, alias_guest1, email_guest1, deploymentId, userId)
+        } catch (error) {
+            expect(error).to.equal('sorry, the requested time slot is busy')
+        }
+
+    })
+
+    it('should match on time: error C', async () => {
+        debugger
+        await registerKey(validFrom, validUntil, alias_guest1, email_guest1, deploymentId, userId)
+        debugger
+        try {
+            await registerKey(validFromC, validUntilC, alias_guest1, email_guest1, deploymentId, userId)
+        } catch (error) {
+            expect(error).to.equal('sorry, the requested time slot is busy')
+        }
+
+    })
+
+    it('should match on time: error D', async () => {
+        debugger
+        await registerKey(validFrom, validUntil, alias_guest1, email_guest1, deploymentId, userId)
+        debugger
+        try {
+            await registerKey(validFromD, validUntilD, alias_guest1, email_guest1, deploymentId, userId)
+        } catch (error) {
+            expect(error).to.equal('sorry, the requested time slot is busy')
+        }
+
+    })
+
+    it('should match on time: error E', async () => {
+        debugger
+        await registerKey(validFrom, validUntil, alias_guest1, email_guest1, deploymentId, userId)
+        debugger
+        try {
+            await registerKey(validFromE, validUntilE, alias_guest1, email_guest1, deploymentId, userId)
+        } catch (error) {
+            expect(error).to.equal('sorry, the requested time slot is busy')
+        }
+
     })
 
 

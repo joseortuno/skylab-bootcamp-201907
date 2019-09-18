@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 
 const { env: { DB_URL_TEST, JWT_SECRET } } = process
 
-describe.only('logic - retrieve key all', () => {
+describe('logic - retrieve key all', () => {
     before(() => database.connect(DB_URL_TEST))
 
     // user

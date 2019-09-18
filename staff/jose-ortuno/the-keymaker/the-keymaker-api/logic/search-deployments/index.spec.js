@@ -7,7 +7,7 @@ const { random } = require('the-keymaker-utils')
 
 const { env: { DB_URL_TEST } } = process
 
-describe.only('logic - search deployments', () => {
+describe('logic - search deployments', () => {
     before(() => database.connect(DB_URL_TEST))
 
     // user
