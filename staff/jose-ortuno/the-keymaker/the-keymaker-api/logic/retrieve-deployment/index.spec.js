@@ -33,16 +33,18 @@ describe('logic - retrieve deployment', () => {
 
         // deployment
         alias_deployment = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment = `address-${random.number(0, 100000)}`
         status = random.boolean()
 
         await Deployment.deleteMany()
-        const deployment = await Deployment.create({ alias: alias_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
+        const deployment = await Deployment.create({created_at: new Date(), alias: alias_deployment, address: address_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
+        
         deploymentId = deployment.id
         
     })
 
     it('should succeed on correct data', async () => {
+
         const deployment = await retrieveDeployment(userId, deploymentId)
 
         expect(deployment).to.exist

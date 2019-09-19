@@ -16,7 +16,7 @@ describe('logic - update key', () => {
     let alias_user, email, password, userId, path
 
     // deployment
-    let alias_deployment, status, deploymentId
+    let alias_deployment, address_deployment, status, deploymentId
 
     // deployment Skylab
     const longitude = 2.199905
@@ -45,11 +45,11 @@ describe('logic - update key', () => {
 
         // deployment
         alias_deployment = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment = `address-${random.number(0, 100000)}`
         status = random.boolean()
 
         await Deployment.deleteMany()
-        const deployment = await Deployment.create({ alias: alias_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
+        const deployment = await Deployment.create({ created_at: new Date(), alias: alias_deployment, address: address_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
         deploymentId = deployment.id
 
         // key
@@ -74,9 +74,9 @@ describe('logic - update key', () => {
         _token = await jwt.sign({
             sub: key._id.toString()
         }, JWT_SECRET, {
-                notBefore: from,
-                expiresIn: expiry
-            })
+            notBefore: from,
+            expiresIn: expiry
+        })
         // insert token in key
         const update = { token: _token }
         await Key.updateOne({ _id: key._id.toString() }, { $set: update })
@@ -97,7 +97,7 @@ describe('logic - update key', () => {
         expect(key.used_at).to.exist
         expect(key.canceled).to.not.exist
         expect(key.status).to.equal(update.status)
-        
+
     })
 
     it('should succeed on correct data: cancelled', async () => {
@@ -115,15 +115,15 @@ describe('logic - update key', () => {
         expect(key.used_at).to.not.exist
         expect(key.canceled).to.exist
         expect(key.status).to.equal(update.status)
-        
+
     })
 
     it('should fail on non-content to updater', async () => {
-        const update = { }
-        
+        const update = {}
+
         try {
             updateKey(deploymentId, update)
-        } catch ({message}) {
+        } catch ({ message }) {
             expect(message).to.equal(`update object is empty`)
         }
     })
@@ -135,10 +135,10 @@ describe('logic - update key', () => {
             canceled: moment(new Date('2026-09-06 11:11:00')),
             status: 'cancelled'
         }
-        
+
         try {
             updateKey(deploymentId, update)
-        } catch ({message}) {
+        } catch ({ message }) {
             expect(message).to.equal(`key with id ${keyId} does not exist`)
         }
     })

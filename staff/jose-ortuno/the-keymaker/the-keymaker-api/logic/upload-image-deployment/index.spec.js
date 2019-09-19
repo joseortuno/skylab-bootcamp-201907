@@ -13,7 +13,7 @@ describe('logic - upload image deployment', () => {
     let alias_user, email, password, userId, path
 
     // deployment
-    let alias_deployment, status, deploymentId
+    let alias_deployment, address_deployment, status, deploymentId
 
     // deployment Skylab
     const longitude = 2.199905
@@ -32,20 +32,20 @@ describe('logic - upload image deployment', () => {
 
         // deployment
         alias_deployment = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment = `address-${random.number(0, 100000)}`
         status = random.boolean()
 
         await Deployment.deleteMany()
-        const deployment = await Deployment.create({ alias: alias_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
+        const deployment = await Deployment.create({ created_at: new Date(), alias: alias_deployment, address: address_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
         deploymentId = deployment.id
-        
+
         image = fs.createReadStream('./test/smiley.png')
     })
-    
+
     it('should succeed on correct image', async () => {
         const result = await uploadImageDeployment(userId, deploymentId, image)
         expect(result).not.to.exist
-        
+
         const deployment = await Deployment.findById(deploymentId)
         expect(deployment.logo).to.exist
         expect(deployment.alias).to.equal(alias_deployment)
@@ -54,6 +54,6 @@ describe('logic - upload image deployment', () => {
         expect(deployment.id).to.exist
         expect(deployment.location).to.exist
     })
-    
+
     after(() => database.disconnect())
 })

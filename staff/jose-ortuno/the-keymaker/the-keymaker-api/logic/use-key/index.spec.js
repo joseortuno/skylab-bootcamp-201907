@@ -15,7 +15,7 @@ describe('logic - use key', () => {
     let alias_user, email, password, userId, path
 
     // Deployments
-    let alias_deployment, status = true, deploymentId
+    let alias_deployment, address_deployment, status = true, deploymentId
 
     // key
     let keyId
@@ -53,9 +53,10 @@ describe('logic - use key', () => {
 
         // deployment#1
         alias_deployment = `alias_deployment-${random.number(0, 100000)}`
+        address_deployment = `address_deployment-${random.number(0, 100000)}`
         
         await Deployment.deleteMany()
-        const deployment = await Deployment.create({ alias: alias_deployment, status, user: userId, location: { coordinates: [longitude1, latitude1]} })
+        const deployment = await Deployment.create({ created_at: new Date(), alias: alias_deployment, address: address_deployment, status, user: userId, location: { coordinates: [longitude1, latitude1]} })
         deploymentId = deployment.id
 
         // key
@@ -100,30 +101,30 @@ describe('logic - use key', () => {
         expect(getKey.status).to.equal('visited')
     })
 
-    it('should succeed on correct data: close', async () => {
+    it('should succeed on correct data: open', async () => {
         const key  = await useKey(keyId, longitude3, latitude3)
 
         expect(key).to.exist
-        expect(key.status).to.equal('close')
-        expect(key.message).to.equal('door not detected')
-        expect(key.deployment).to.not.exist
+        expect(key.status).to.equal('open')
+        expect(key.message).to.equal('key used correctly')
+        expect(key.deployment).to.exist
 
         const getKey = await Key.findById(keyId).lean()
-        expect(getKey.used_at).to.not.exist
-        expect(getKey.status).to.equal('waiting')
+        expect(getKey.used_at).to.exist
+        expect(getKey.status).to.equal('visited')
     })
 
-    it('should succeed on correct data: close', async () => {
+    it('should succeed on correct data: open', async () => {
         const key  = await useKey(keyId, longitude4, latitude4)
         
         expect(key).to.exist
-        expect(key.status).to.equal('close')
-        expect(key.message).to.equal('door not detected')
-        expect(key.deployment).to.not.exist
+        expect(key.status).to.equal('open')
+        expect(key.message).to.equal('key used correctly')
+        expect(key.deployment).to.exist
 
         const getKey = await Key.findById(keyId).lean()
-        expect(getKey.used_at).to.not.exist
-        expect(getKey.status).to.equal('waiting')
+        expect(getKey.used_at).to.exist
+        expect(getKey.status).to.equal('visited')
 
     })
 

@@ -14,7 +14,7 @@ describe('logic - update deployment', () => {
     let alias_user, email, password, userId, path
 
     // deployment
-    let alias_deployment, status, deploymentId
+    let alias_deployment, address_deployment, status, deploymentId
 
     // deployment Skylab
     const longitude = 2.199905
@@ -33,10 +33,11 @@ describe('logic - update deployment', () => {
 
         // deployment
         alias_deployment = `alias_deployment-${random.number(0, 100000)}`
+        address_deployment = `addres_deployment-${random.number(0, 100000)}`
         status = random.boolean()
 
         await Deployment.deleteMany()
-        const deployment = await Deployment.create({ logo: path, alias: alias_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
+        const deployment = await Deployment.create({ created_at: new Date(), logo: path, alias: alias_deployment, address: address_deployment, status, user: userId, location: { coordinates: [longitude, latitude] } })
         deploymentId = deployment.id
 
     })
@@ -55,15 +56,15 @@ describe('logic - update deployment', () => {
         expect(deployment).to.exist
         expect(deployment.logo).to.equal(update.logo)
         expect(deployment.status).to.equal(update.status)
-        
+
     })
 
     it('should fail on non-content to updater', async () => {
-        const update = { }
-        
+        const update = {}
+
         try {
             updateDeployment(deploymentId, update)
-        } catch ({message}) {
+        } catch ({ message }) {
             expect(message).to.equal(`update object is empty`)
         }
     })
@@ -75,10 +76,10 @@ describe('logic - update deployment', () => {
             status: random.boolean(),
             logo: `path/${random.number(0, 100000)}/${random.number(0, 100000)}/${random.number(0, 100000)}`
         }
-        
+
         try {
             updateDeployment(deploymentId, update)
-        } catch ({message}) {
+        } catch ({ message }) {
             expect(message).to.equal(`deployment with id ${deploymentId} does not exist`)
         }
     })

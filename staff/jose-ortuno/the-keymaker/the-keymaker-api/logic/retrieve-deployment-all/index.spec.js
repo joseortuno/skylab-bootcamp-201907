@@ -51,44 +51,44 @@ describe('logic - retrieve deployment all', () => {
         // DEPLOYMENT
         // deployment 1
         alias_deployment1 = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment1 = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment1 = `address-${random.number(0, 100000)}`
         status1 = random.boolean()
         path3 = `path/${random.number(0, 100000)}/${random.number(0, 100000)}/${random.number(0, 100000)}`
 
 
-        await Deployment.create({ logo: path3, alias: alias_deployment1, status: status1, user: userId1, location: { coordinates: [longitude, latitude] } })
+        await Deployment.create({ created_at: new Date(), logo: path3, alias: alias_deployment1, address: address_deployment1,status: status1, user: userId1, location: { coordinates: [longitude, latitude] } })
 
         // deployment 2
         alias_deployment2 = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment2 = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment2 = `address-${random.number(0, 100000)}`
         status2 = random.boolean()
         path4 = `path/${random.number(0, 100000)}/${random.number(0, 100000)}/${random.number(0, 100000)}`
 
-        await Deployment.create({ logo: path4, alias: alias_deployment2, status: status2, user: userId1, location: { coordinates: [longitude, latitude] } })
+        await Deployment.create({ created_at: new Date(), logo: path4, alias: alias_deployment2, address: address_deployment2, status: status2, user: userId1, location: { coordinates: [longitude, latitude] } })
 
         // deployment 3
         alias_deployment3 = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment3 = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment3 = `address-${random.number(0, 100000)}`
         status3 = random.boolean()
         path5 = `path/${random.number(0, 100000)}/${random.number(0, 100000)}/${random.number(0, 100000)}`
 
-        await Deployment.create({ logo: path5, alias: alias_deployment3, status: status3, user: userId1, location: { coordinates: [longitude, latitude] } })
+        await Deployment.create({ created_at: new Date(), logo: path5, alias: alias_deployment3, address: address_deployment3, status: status3, user: userId1, location: { coordinates: [longitude, latitude] } })
 
         // deployment 4
         alias_deployment4 = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment4 = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment4 = `address-${random.number(0, 100000)}`
         status4 = random.boolean()
         path6 = `path/${random.number(0, 100000)}/${random.number(0, 100000)}/${random.number(0, 100000)}`
 
-        await Deployment.create({logo: path6, alias: alias_deployment4, status: status4, user: userId2, location: { coordinates: [longitude, latitude] } })
+        await Deployment.create({ created_at: new Date(), logo: path6, alias: alias_deployment4, address: alias_deployment4, status: status4, user: userId2, location: { coordinates: [longitude, latitude] } })
 
         // deployment 5
         alias_deployment5 = `alias_deployment-${random.number(0, 100000)}`
-        email_deployment5 = `email-${random.number(0, 100000)}@domain.com`
+        address_deployment5 = `address-${random.number(0, 100000)}`
         status5 = random.boolean()
         path7 = `path/${random.number(0, 100000)}/${random.number(0, 100000)}/${random.number(0, 100000)}`
 
-        await Deployment.create({logo: path7,  alias: alias_deployment5, status: status5, user: userId2, location: { coordinates: [longitude, latitude] } })
+        await Deployment.create({ created_at: new Date(), logo: path7,  alias: alias_deployment5, address: address_deployment5, status: status5, user: userId2, location: { coordinates: [longitude, latitude] } })
         
     })
 
