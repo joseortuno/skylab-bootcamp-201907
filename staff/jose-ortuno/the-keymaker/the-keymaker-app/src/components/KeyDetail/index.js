@@ -21,7 +21,7 @@ export default withRouter(function ({ history, id }) {
     }, [])
 
     const handleGoToRegisterKey = () => {
-        history.push('/deployments/keys/register-key')
+        history.push('/deployments/keys/register')
     }
 
     const handleOnBack = () => history.go(-1)

@@ -23,7 +23,7 @@ export default withRouter(function ({ onEvent, history }) {
 
     // HANDLES
     const handleGoToRegisterKey = () => {
-        history.push('/deployments/keys/register-key')
+        history.push('/deployments/keys/register')
     }
 
     const handleGoToRegisterDeployment = () => {
