@@ -1,5 +1,5 @@
 import './index.sass'
-import React from 'react'
+import React, { useState } from 'react'
 import logic from '../../logic'
 import { Route, withRouter } from 'react-router-dom'
 
@@ -10,6 +10,7 @@ import Home from '../Home'
 import AccessDeployment from '../AccessDeployment'
 
 export default withRouter(function ({ history }) {
+  const [view, setView] = useState('landing')
 
   const handleBack = () => history.push('/')
 
@@ -26,7 +27,7 @@ export default withRouter(function ({ history }) {
   const handleLogin = async (email, password) => {
     try {
       await logic.authenticateUser(email, password)
-
+      setView('home')
       history.push('/deployments')
     } catch ({ message }) {
       console.log('fail login', message)
@@ -50,22 +51,45 @@ export default withRouter(function ({ history }) {
   }
 
   return <>
+    <Route path="/access/:id" render={props => <AccessDeployment />} />
     <div className="container">
-      <Route path="/access/:id" render={props => <AccessDeployment />} />
 
-      <Route exact path="/" render={() => !logic.isUserLogged() ? <header >
-        <nav>
-          <ul>
-            <li><a href="" onClick={handleGoToRegister}>Register</a></li>
-            <li><a href="" onClick={handleGoToLogin}>Login</a></li>
+      <section className="landing">
+
+        <Route exact path="/" render={() => !logic.isUserLogged() ? < >
+          <h1 className="landing__title">the keymaker</h1>
+
+          <section className="landing__sion">
+            <img className="landing__image" src="https://res.cloudinary.com/dgsndtxtl/image/upload/v1568838146/logo-small_vcfw3z.png" />
+            <p className="landing__text">"puedes salvar sion si llegas a la fuente  para ello necesitarás al creador de llaves" Oracle - Matrix Reloaded</p>
+
+          </section>
+          <ul className="landing__list">
+            <li className="landing__item"><a href="" onClick={handleGoToRegister}><i class="fas fa-chevron-right"></i> Register</a></li>
+            <li className="landing__item"><a href="" onClick={handleGoToLogin}><i class="fas fa-chevron-right"></i> Login</a></li>
           </ul>
-        </nav>
-      </header> : history.push('/deployments')} />
+        </> : history.push('/deployments')} />
 
-      {!logic.isUserLogged() && <main>
-        <Route path="/register" render={() => <Register onBack={handleBack} onRegister={handleRegister} />} />
-        <Route path="/login" render={() => <Login onBack={handleBack} onLogin={handleLogin} />} />
-      </main>}
+
+        <Route path="/register" render={() => <>
+          <h1 className="landing__title">the keymaker</h1>
+          <section className="landing__sion">
+            <img className="landing__image" src="https://res.cloudinary.com/dgsndtxtl/image/upload/v1568838146/logo-small_vcfw3z.png" />
+            <p className="landing__text">"puedes salvar sion si llegas a la fuente  para ello necesitarás al creador de llaves" Oracle - Matrix Reloaded</p>
+          </section>
+          <Register onBack={handleBack} onRegister={handleRegister} />
+        </>} />
+
+        <Route path="/login" render={() => <>
+          <h1 className="landing__title">the keymaker</h1>
+          <section className="landing__sion">
+            <img className="landing__image" src="https://res.cloudinary.com/dgsndtxtl/image/upload/v1568838146/logo-small_vcfw3z.png" />
+            <p className="landing__text">"puedes salvar sion si llegas a la fuente  para ello necesitarás al creador de llaves" Oracle - Matrix Reloaded</p>
+          </section>
+          <Login onBack={handleBack} onLogin={handleLogin} />
+        </>} />
+
+      </section>
 
       <Route path="/deployments" render={() => logic.isUserLogged() ? <Home onBack={handleBack} onLogout={handleLogout} /> : history.push('/')} />
     </div>

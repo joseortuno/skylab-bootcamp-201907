@@ -1,9 +1,9 @@
 import React from 'react'
 
 export default function ({ onBack, onLogin }) {
-    return <>
+    return <div className="landing__list">
         <h2>Login</h2>
-        <form onSubmit={event => {
+        <form className="landing__form" onSubmit={event => {
             event.preventDefault()
 
             const { target: { email: { value: email }, password: { value: password } } } = event
@@ -19,5 +19,5 @@ export default function ({ onBack, onLogin }) {
 
             onBack()
         }}>Go back</a>
-    </>
+    </div>
 }

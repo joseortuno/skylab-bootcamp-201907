@@ -28,6 +28,7 @@ export default withRouter(function ({ history }) {
 
     const handleViewDeploymentsAll = () => {
         setView('deployments')
+        setDeploymentResults(undefined)
     }
 
     const handleSearchQuery = async (query) => {

@@ -13,7 +13,7 @@ export default function ({ onKey }) {
 
     return <div className="view__list">
         <ul>
-            <li className='view__item' key={`${random.number(0, 99)}-${onKey.id}`}><i className="fas fa-key"></i>{onKey.alias_guest}</li>
+            <li className='view__item' key={`${random.number(0, 99)}-${onKey.id}`}><i className="fas fa-key"></i> {onKey.alias_guest}</li>
             <li className='view__item' key={`${random.number(0, 99)}-${onKey.id}`}>{onKey.email_guest}</li>
             <li className='view__item' key={`${random.number(0, 99)}-${onKey.id}`}>valid from: {validFrom}</li>
             <li className='view__item' key={`${random.number(0, 99)}-${onKey.id}`}>valid until: {validUntil}</li>

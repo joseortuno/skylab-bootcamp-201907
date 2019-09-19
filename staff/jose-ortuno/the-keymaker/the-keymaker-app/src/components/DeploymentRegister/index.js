@@ -59,13 +59,13 @@ export default withRouter(function ({ history }) {
                 <option value="true">active</option>
                 <option value="false">inactive</option>
             </select>
-            <button><i class="fas fa-chevron-right"></i> save</button>
+            <button className="register__button"><i class="fas fa-chevron-right"></i> save</button>
         </form>}
-        {view === 'confirm' && <section>
-            <p>confirm location:</p>
-            <p>{data.getAddress}</p>
-            <button onClick={handleConfirm} >yes</button>
-            <button onClick={handleReturn} >return</button>
+        {view === 'confirm' && <section className="register-deployment__confirm">
+            <p className="register-deployment__text">confirm location:</p>
+            <p className="register-deployment__text">{data.getAddress}</p>
+            <button className="register-deployment__button" onClick={handleConfirm} >yes</button>
+            <button className="register-deployment__button" onClick={handleReturn} >return</button>
         </section>}
     </section>
 })

@@ -16,12 +16,14 @@ import Header from '../Header'
 export default withRouter(function ({ history }) {
     const [event, setEvent] = useState(undefined)
     const [keys, setKeys] = useState(undefined)
+    const [view, setView] = useState('home')
 
     useEffect(() => {
         (async () => {
             try {
                 const keys = await logic.retrieveKeys()
                 setKeys(keys)
+                setView('home')
             } catch ({ message }) {
                 console.error(message)
             }

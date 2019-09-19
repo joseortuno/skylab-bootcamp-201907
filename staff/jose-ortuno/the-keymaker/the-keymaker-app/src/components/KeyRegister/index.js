@@ -96,7 +96,7 @@ export default withRouter(function ({ onDate, history }) {
                         }
                         )}
                     </select> || <p>there are no deployments</p>}
-                    <button><i class="fas fa-chevron-right"></i> save</button>
+                    <button className="register__button"><i class="fas fa-chevron-right"></i> save</button>
                 </form>
             </section>
         </section>}

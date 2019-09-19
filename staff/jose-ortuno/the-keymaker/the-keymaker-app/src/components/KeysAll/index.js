@@ -34,6 +34,7 @@ export default withRouter(function ({ history }) {
     }
 
     const handleViewKeysAll = () => {
+        setKeyResults(undefined)
         setView('keys')
     }
 
@@ -72,7 +73,7 @@ export default withRouter(function ({ history }) {
             </>}
 
             {view === 'results' && <>
-                {keyResults && keys.map(key => {
+                {keyResults && keyResults.map(key => {
                     return <Link className="view__element" key={key.id} to={`/deployments/keys/detail/${key.id}`} >
                         <KeyView onKey={key} />
                     </Link>

@@ -38,5 +38,3 @@ export default withRouter(function ({ history, id }) {
         </section>}
     </section>
 })
-
-       //  TODO: enseñar el piso con populate
