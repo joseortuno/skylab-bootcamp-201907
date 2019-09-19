@@ -61,7 +61,7 @@ export default withRouter(function ({ history }) {
 
           <section className="landing__sion">
             <img className="landing__image" src="https://res.cloudinary.com/dgsndtxtl/image/upload/v1568838146/logo-small_vcfw3z.png" />
-            <p className="landing__text">"...you can save Zion if you get to the source for this you will need the keymaker" Oracle - The Matrix Reloaded</p>
+            <p className="landing__text">"you can save zion if you get to the source. for this you will need the Keymaker." the oracle - the matrix reloaded</p>
 
           </section>
           <ul className="landing__list">
@@ -75,7 +75,7 @@ export default withRouter(function ({ history }) {
           <h1 className="landing__title">the keymaker</h1>
           <section className="landing__sion">
             <img className="landing__image" src="https://res.cloudinary.com/dgsndtxtl/image/upload/v1568838146/logo-small_vcfw3z.png" />
-            <p className="landing__text">"...you can save Zion if you get to the source for this you will need the keymaker" Oracle - The Matrix Reloaded</p>
+            <p className="landing__text">"you can save zion if you get to the source. for this you will need the Keymaker." the oracle - the matrix reloaded</p>
           </section>
           <Register onBack={handleBack} onRegister={handleRegister} />
         </>} />
@@ -84,7 +84,7 @@ export default withRouter(function ({ history }) {
           <h1 className="landing__title">the keymaker</h1>
           <section className="landing__sion">
             <img className="landing__image" src="https://res.cloudinary.com/dgsndtxtl/image/upload/v1568838146/logo-small_vcfw3z.png" />
-            <p className="landing__text">"...you can save Zion if you get to the source for this you will need the keymaker" Oracle - The Matrix Reloaded</p>
+            <p className="landing__text">"you can save zion if you get to the source. for this you will need the Keymaker." the oracle - the matrix reloaded</p>
           </section>
           <Login onBack={handleBack} onLogin={handleLogin} />
         </>} />
