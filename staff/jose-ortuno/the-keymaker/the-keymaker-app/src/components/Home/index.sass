@@ -1,0 +1,167 @@
+.view
+    display: flex
+    flex-direction: column
+    flex-wrap: wrap
+    &__navigate
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        padding: 14px 0
+        width: 100%
+        margin-bottom: 20px
+        button
+            margin-right: 10px
+            margin-left: 10px
+    &__image
+        width: 240px
+        height: 200px
+        object-fit: cover
+    &__item, span, i
+        font-size: 0.8rem
+    &__detail
+        display: flex
+        justify-content: flex-start
+        flex-direction: row
+        ul
+            margin-left: 20px
+    &__elements
+        display: flex
+        justify-content: flex-start
+        flex-wrap: wrap
+        flex-direction: row
+    &__element
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        flex-wrap: wrap
+        margin-bottom: 10px
+        margin-left: 8px
+        padding: 29px
+        width: 308px
+        img
+            width: 240px
+            height: 200px
+            object-fit: cover
+
+.navigate
+    &__search
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+    &__item
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        button
+            margin-right: 10px
+            margin-left: 10px
+        i
+            align-self: center
+.keys
+    &__status
+        &--waiting
+            color: white
+            background: #F0C808
+        &--visited
+            color: white
+            background: #34F6F2
+        &--expired
+            color: white
+            background: #E85D75
+        &--cancelled
+            color: white
+            background: #F87060
+
+.calendar
+    margin: 1em 0 5em 0
+    width: 100%
+    &__week, &__header
+        display: grid
+        grid-template-columns: repeat(7, 1fr)
+    &__week
+        grid-auto-rows: 200px
+        text-align: right
+        border: 1px solid lightgrey
+    &__header
+        grid-auto-rows: 50px
+        align-items: center
+        text-align: center
+    &__day
+        font-size: .75rem
+        color: grey
+        padding: 16px
+        border-right: 1px solid lightgrey
+        border-top: 1px solid lightgrey
+        background: #1E2431
+        overflow: hidden
+    &__day:last-child
+        border-right: 0
+    &__header > div
+        text-transform: uppercase
+        font-size: 0.8em
+    &__disabled
+        background: #222835
+        color: #E85D75
+        font-size: .75rem
+        padding: 16px
+        border-right: 1px solid lightgrey
+        border-top: 1px solid lightgrey
+        cursor: not-allowed
+    &__selected
+        color: #F0C808
+        font-size: .75rem
+        padding: 16px
+        border: 2px solid lightgrey
+    &__key, &__key i
+        font-size: .75rem
+        margin-bottom: 6px
+
+.landing
+    &__main
+        display: flex
+        flex-direction: row
+        justify-content: flex-start
+        align-items: center
+    &__text
+        margin-right: 100px
+
+.access
+    i
+        font-size: 2rem
+    img
+        width: 100%
+
+// FORM
+.register-deployment__form, .register-key__form
+    width: 50%
+    display: flex
+    flex-direction: column
+    input
+        margin-bottom: 10px
+        padding: 5px
+.register-deployment
+    margin-bottom: 20px
+    &__button
+        margin-right: 20px
+.register__button
+    width: 10%
+    margin-top: 30px
+    margin: 40px 0
+    padding: 0px
+    border-radius: 0px
+    width: 100px
+    &:focus
+    &:hover
+        background-color: #42C920
+        color: White
+
+.home-main
+    border-top: 1px solid #EFF1F3
+    border-bottom: 1px solid #EFF1F3
+    width: 100%
+    padding: 20px
+    background: #222835
+.home-footer
+    padding: 20px
+    p
+        font-size: 0.7rem

@@ -1,0 +1,74 @@
+*
+    margin: 0
+    padding: 0
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+    font-size: 16px
+
+// GENERAL
+body
+    font-family: 'Space Mono', monospace
+    background: #1E2431
+    color: #EFF1F3
+    font-weight: 400
+h1
+    font-size: 2rem
+    font-weight: 400
+h2, h3
+    font-size: 1.1rem
+    font-weight: 400
+    margin-bottom: 16px
+a
+    color: #EFF1F3
+    text-decoration: none
+    font-size: 1rem
+    transition: 0.5s
+    &:hover
+        opacity: 0.6
+p
+    font-size: 1rem
+    line-height: 1.2rem
+ul
+    list-style: none
+li
+    margin-bottom: 10px
+span
+    margin: 10px 0
+button
+    &:hover
+        background-color: #42C920
+        color: White
+
+// ICONS
+.fas
+    font-size: 1rem
+    align-self: center
+
+.container
+    border-right: 1px solid #EFF1F3
+    border-left: 1px solid #EFF1F3
+    margin: 0px auto
+    width: 90%
+    max-width: 1000px
+    min-width: 1000px
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+// EXTENDS
+%form-text
+    display: flex
+    flex-direction: column
+    input
+        margin-bottom: 10px
+        padding: 5px
+    button
+        margin: 40px 0
+        padding: 0px
+        border-radius: 0px
+        width: 100px
+        &:focus
+        &:hover
+            background-color: #42C920
+            color: White
