@@ -21,8 +21,6 @@ The virtual key (token) can show the following statuses:
 * Search guest and deployments
 * creation of automatic keys
 * creation and cancellation of the invitation
-* visualización del estado de la reserva (usada/no usada/cancelada…)
-* cancelación de una reserva.
 
 ## Build status 
 
@@ -37,50 +35,49 @@ The virtual key (token) can show the following statuses:
 
 ### Use Cases
 
-![cases](/the-keymaker-doc/images/the-keymaker-uses-cases.jpg)
+![cases](https://res.cloudinary.com/dgsndtxtl/image/upload/v1568886429/Uses_cases_pe8jxs.jpg)
 
 ### Flows
 
-![flows](/the-keymaker-doc/images/the-keymaker-flow-diagram.jpg)
+![flows](https://res.cloudinary.com/dgsndtxtl/image/upload/v1568885877/Flow_diagram_ohgoen.jpg)
 
 ## Technical Description
 
 ### Blocks
 
-![block](https://svgshare.com/i/EVH.svg)
+![block](https://res.cloudinary.com/dgsndtxtl/image/upload/v1568887470/Untitled_Diagram_nlu95j.jpg)
 
 ### Data Model
 
-![data](https://svgshare.com/i/ETK.svg)
+![data](https://res.cloudinary.com/dgsndtxtl/image/upload/v1568890026/Schemas_xmy6ms.jpg)
 
 ## Screenshots
 
-### Register
+### Landing
 
-![register](https://i.ibb.co/C7hGw4t/register.png)
+![the keymaker](https://res.cloudinary.com/dgsndtxtl/image/upload/v1568888554/Screenshot_2019-09-19_at_12.17.15_plf4kv.png)
 
-### Sign in
+### Calendar
 
-![login](https://i.ibb.co/PMM2DyD/signin.png)
+![the keymaker](https://res.cloudinary.com/dgsndtxtl/image/upload/v1568888553/Screenshot_2019-09-19_at_12.19.18_kxn3ge.png)
 
-## Tests
+### Register key
 
-![jasmine](https://i.ibb.co/5RF4Qx5/jasmine.png)
+![the keymaker](https://res.cloudinary.com/dgsndtxtl/image/upload/v1568888553/Screenshot_2019-09-19_at_12.19.35_qcbyas.png)
 
-## API Reference
+### Landing Access
 
-[Spotify General API Documentation](https://developer.spotify.com/documentation/)
+![the keymaker](https://res.cloudinary.com/dgsndtxtl/image/upload/v1568888554/Screenshot_2019-09-19_at_12.21.08_md4jh1.png)
 
-[Spotify Web-API](https://developer.spotify.com/documentation/web-api/)
 
+## Code coverage
+
+![cloudinary](https://res.cloudinary.com/dgsndtxtl/image/upload/v1568887853/Screenshot_2019-09-19_at_12.09.33_dh5poh.png)
+
+## License
+
+Javascript, ReactJS, Node.js, Express, MongoDB & Mongoose.
 
 ## Credits
 
 * Jose Ortuño [Github](https://github.com/joseortuno/)
-
-
-## License
-
-lorem
-
-
