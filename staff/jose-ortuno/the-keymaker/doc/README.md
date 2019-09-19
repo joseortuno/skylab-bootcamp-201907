@@ -1,13 +1,18 @@
 ## The Keymaker
-The Keymaker es una web-app que gestiona invitaciones para visitadores de inmuebles (deployments). Las invitaciones se crean a partir de un deployment determinado hacia un visitador específico. Una vez la invitación se ha creado, se genera automáticamente una llave virtual del deployment con un rango de fecha y hora determinados y se envía por correo electrónico al invitado en cuestión. 
+The Keymaker is a web-app for creating and managing real estate property appointments with potential buyers via invitation. With our app, agents can invite interested customers and arrange visits to specific deployments. Once a customer accepts the proposed schedule, The Keymaker validates the appointment, locks the time slot and sends the customer an invitation and a virtual key via email. Once this process is confirmed, the potential buyer can visit the deployment and enter the property by themselves (no agent required) with the supplied Keymaker virtual key.
 
 ## Motivation
-La web-app genera un histórico de llaves creadas por invitación, deployment, fecha de inicio y expiración. El usuario, también podrá generar nuevas llaves virtuales y cambiar su status. Los status de las llaves son: en espera, cancelada, visitado y expirada. Por último, también se guarda un listado de deployments creado por el usuario, el usuario podrá editar la información de cada deployment y cambiar su status de activo a inactivo. La web-app tiene la capacidad de tener más de un usuario.
+The web-app generates a history of keys based on user, invitation, deployment, date of appointment and expiration date.
 
-La llave virtual (token) podrá tener los siguientes estados:
-* Token valido
-* Token cancelado
-* Token previamente canjeado/usado
+Users can generate new virtual keys and change their statuses, which are ‘standby’, ‘cancelled’, ‘visited’ and ‘expired’. They are also able to save their user-generated history of deployments, on which they can modify specific deployment information and switch their status from ‘active’ to ‘inactive’.
+
+The web-app allows for more than one user.
+
+The virtual key (token) can show the following statuses:
+
+- Valid token
+- Cancelled token
+- Used token
 
 ## Features
 
@@ -23,7 +28,7 @@ La llave virtual (token) podrá tener los siguientes estados:
 
 [![Build Status](https://img.shields.io/badge/build-working-brightgreen.svg)](https://github.com/joseortuno/skylab-bootcamp-201907/tree/esputy/develop/staff/jose-ortuno/the-keymaker)
 
-### "The Oracle tells Neo that he will need the Keymaker's help in order to reach the Source, the machine mainframe (...)" The Matrix Reloaded
+### "You can save Zion if you get to the source. For this you will need the Keymaker." Oracle - The Matrix Reloaded
 [More info about a fictional character](https://en.wikipedia.org/wiki/Keymaker)
 
 ![alt The Keymaker - Matrix](https://canalhollywood.es/wp-content/uploads/2016/10/key-maker_CreadorDeLlaves.jpg)
