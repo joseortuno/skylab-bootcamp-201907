@@ -37,7 +37,7 @@ module.exports =
         const getValidUntil = moment(validUntil)
         const from = getValidFrom.diff(createdAt, 'seconds')
         const expiry = getValidUntil.diff(createdAt, 'seconds')
-        debugger
+        
         return (async () => {
             // check that the user exists
             const user = await User.findById(userId)
@@ -48,12 +48,13 @@ module.exports =
             // check que ninguna llave exista en la franja horaria especificada
             
             const keys = await Key.find({ user: userId, deployment: deploymentId }, { __v: 0 })
+            
             if (keys.length !== 0) {
                 keys.forEach(element => {
-                    if (validFrom <= element.valid_until && element.valid_from <= validUntil) throw Error('sorry, the requested time slot is busy')
+                    if (validFrom <= element.valid_until && element.valid_from <= validUntil) throw new Error('sorry, the requested time slot is busy')
                 })
             }
-            debugger
+            
             // create key sin token
             const key = await Key.create({ created_at: createdAt, valid_from: validFrom, valid_until: validUntil, status: 'waiting', alias_guest: aliasGuest, email_guest: emailGuest, deployment: deploymentId, user: userId })
             const keyId = key._id.toString()
@@ -71,7 +72,7 @@ module.exports =
 
             /*EMAIL INIT************************************************************/
             let info
-            const successEmail = await sendEmail(keyId, emailGuest, aliasGuest, validFrom, validUntil, deployment.alias, deployment.logo)
+            const successEmail = await sendEmail(keyId, emailGuest, aliasGuest, validFrom, validUntil, deployment.alias, deployment.logo, deployment.address )
             if(successEmail) info = 'email sent correctly' 
             else info = 'email not sent'
             

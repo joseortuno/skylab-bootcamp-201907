@@ -7,7 +7,7 @@ const { env: { SMTP_USER, SMTP_PASS, SMTP_HOST, SMPT_PORT, SMTP_SECURE } } = pro
  * EMAIL INIT
  ************************************************************************/
 
-module.exports = async (keyId, emailGuest, aliasGuest, validFrom, validUntil, aliasDeployment, logoDeployment) => {
+module.exports = async (keyId, emailGuest, aliasGuest, validFrom, validUntil, aliasDeployment, logoDeployment, addressDeployment) => {
     // email(aliasGuest, emailGuest) // utils
 
     // Generate test SMTP service account from ethereal.emails
@@ -24,9 +24,10 @@ module.exports = async (keyId, emailGuest, aliasGuest, validFrom, validUntil, al
     })
 
     // transform date
-    const from = moment(validFrom)
-    const until = moment(validUntil)
-
+    const fromDate = moment(validFrom).format('DD-MM-YYY')
+    const fromHours = moment(validFrom).format('HH:mm')
+    const untilDate = moment(validUntil).format('DD-MM-YYY')
+    const untilHours = moment(validUntil).format('HH:mm')
 
     // content email
     const subjectMail = `hello ${aliasGuest}! Key 🔑👉🏠`
@@ -54,11 +55,11 @@ module.exports = async (keyId, emailGuest, aliasGuest, validFrom, validUntil, al
         opening time visit to the property: 
         <ul>
             <li>property: ${aliasDeployment}</li>
-            <li>entry date: ${from}</li>
-            <li>departure date: ${until}</li>
-            <li>start time: XX</li>
-            <li>end time: XX</li>
-            <li>property address: XX</li>
+            <li>entry date: ${fromDate}</li>
+            <li>departure date: ${untilDate}</li>
+            <li>start time: ${fromHours}</li>
+            <li>end time: ${untilHours}</li>
+            <li>property address: ${addressDeployment}</li>
     </td>
 </tr>
 <td>
@@ -68,7 +69,7 @@ module.exports = async (keyId, emailGuest, aliasGuest, validFrom, validUntil, al
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-        from: '"TheKeymake" <key@thekeymaker.com>', // sender address
+        from: '"TheKeymaker" <key@thekeymaker.com>', // sender address
         to: emailGuest, // list of receivers
         subject: subjectMail, // Subject line
         text: textMail, // plain text body

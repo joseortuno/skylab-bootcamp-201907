@@ -7,7 +7,7 @@ const { random } = require('the-keymaker-utils')
 
 const { env: { DB_URL_TEST } } = process
 
-describe.only('logic - register key', () => {
+describe('logic - register key', () => {
     before(() => database.connect(DB_URL_TEST))
 
     // user
@@ -50,7 +50,7 @@ describe.only('logic - register key', () => {
     let validUntilE = new Date('2019-09-06 12:00:00')
 
     // date key 1
-    let validFrom1 = new Date('2019-09-06 12:00:00')
+    let validFrom1 = new Date('2019-09-06 12:01:00')
     let validUntil1 = new Date('2019-09-06 13:00:00')
 
     // date key 2
@@ -249,8 +249,9 @@ describe.only('logic - register key', () => {
         debugger
         try {
             await registerKey(validFromA, validUntilA, alias_guest1, email_guest1, deploymentId, userId)
-        } catch (error) {
-            expect(error).to.equal('sorry, the requested time slot is busy')
+        } catch ({message}) {
+            debugger
+            expect(message).to.equal('sorry, the requested time slot is busy')
         }
 
     })
@@ -261,8 +262,8 @@ describe.only('logic - register key', () => {
         debugger
         try {
             await registerKey(validFromB, validUntilB, alias_guest1, email_guest1, deploymentId, userId)
-        } catch (error) {
-            expect(error).to.equal('sorry, the requested time slot is busy')
+        } catch ({message}) {
+            expect(message).to.equal('sorry, the requested time slot is busy')
         }
 
     })
@@ -273,8 +274,8 @@ describe.only('logic - register key', () => {
         debugger
         try {
             await registerKey(validFromC, validUntilC, alias_guest1, email_guest1, deploymentId, userId)
-        } catch (error) {
-            expect(error).to.equal('sorry, the requested time slot is busy')
+        } catch ({message}) {
+            expect(message).to.equal('sorry, the requested time slot is busy')
         }
 
     })
@@ -285,8 +286,8 @@ describe.only('logic - register key', () => {
         debugger
         try {
             await registerKey(validFromD, validUntilD, alias_guest1, email_guest1, deploymentId, userId)
-        } catch (error) {
-            expect(error).to.equal('sorry, the requested time slot is busy')
+        } catch ({message}) {
+            expect(message).to.equal('sorry, the requested time slot is busy')
         }
 
     })
@@ -294,11 +295,10 @@ describe.only('logic - register key', () => {
     it('should match on time: error E', async () => {
         debugger
         await registerKey(validFrom, validUntil, alias_guest1, email_guest1, deploymentId, userId)
-        debugger
         try {
             await registerKey(validFromE, validUntilE, alias_guest1, email_guest1, deploymentId, userId)
-        } catch (error) {
-            expect(error).to.equal('sorry, the requested time slot is busy')
+        } catch ({message}) {
+            expect(message).to.equal('sorry, the requested time slot is busy')
         }
 
     })
