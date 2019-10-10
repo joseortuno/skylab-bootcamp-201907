@@ -12,7 +12,8 @@
     "test:inspect": "npx mocha --inspect-brk=9230 logic/**/*.spec.js",
     "test:coverage": "nyc --reporter=html --reporter=text mocha logic/**/**/*.spec.js --runInBand",
     "lint:js": "eslint logic/",
-    "lint:js:fix": "eslint --fix logic/"
+    "lint:js:fix": "eslint --fix logic/",
+    "phoenix": "rm -RF node_modules && rm package-loc.json && npm install --prefer-online"
   },
   "keywords": [],
   "author": "",
