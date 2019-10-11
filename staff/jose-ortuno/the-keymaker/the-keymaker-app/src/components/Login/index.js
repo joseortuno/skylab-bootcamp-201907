@@ -11,7 +11,7 @@ export default function ({ onBack, onLogin }) {
             onLogin(email, password)
         }}>
             <input type="email" name="email" placeholder="email" />
-            <input type="password" name="password" placeholder="password"/>
+            <input type="password" name="password" placeholder="password" />
             <button><i class="fas fa-chevron-right"></i> login</button>
         </form>
         <a href="#" onClick={event => {

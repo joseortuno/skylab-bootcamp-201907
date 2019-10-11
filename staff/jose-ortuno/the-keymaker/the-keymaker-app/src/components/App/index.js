@@ -8,6 +8,8 @@ import Register from '../Register'
 import Login from '../Login'
 import Home from '../Home'
 import AccessDeployment from '../AccessDeployment'
+import Landing from '../Landing'
+import LandingList from '../LandingList'
 
 export default withRouter(function ({ history }) {
   const [view, setView] = useState('landing')
@@ -55,40 +57,20 @@ export default withRouter(function ({ history }) {
     <div className="container">
 
       <section className="landing">
-
-        <Route exact path="/" render={() => !logic.isUserLogged() ? < >
-          <h1 className="landing__title">the keymaker</h1>
-
-          <section className="landing__sion">
-            <img className="landing__image" src="https://res.cloudinary.com/dgsndtxtl/image/upload/v1568838146/logo-small_vcfw3z.png" />
-            <p className="landing__text">"you can save zion if you get to the source. for this you will need the Keymaker." the oracle - the matrix reloaded</p>
-
-          </section>
-          <ul className="landing__list">
-            <li className="landing__item"><a href="" onClick={handleGoToRegister}><i class="fas fa-chevron-right"></i> Register</a></li>
-            <li className="landing__item"><a href="" onClick={handleGoToLogin}><i class="fas fa-chevron-right"></i> Login</a></li>
-          </ul>
+        <Route exact path="/" render={() => !logic.isUserLogged() ? <>
+          <Landing />
+          <LandingList onRegister={handleGoToRegister} onLogin={handleGoToLogin} />
         </> : history.push('/deployments')} />
 
-
         <Route path="/register" render={() => <>
-          <h1 className="landing__title">the keymaker</h1>
-          <section className="landing__sion">
-            <img className="landing__image" src="https://res.cloudinary.com/dgsndtxtl/image/upload/v1568838146/logo-small_vcfw3z.png" />
-            <p className="landing__text">"you can save zion if you get to the source. for this you will need the Keymaker." the oracle - the matrix reloaded</p>
-          </section>
+          <Landing />
           <Register onBack={handleBack} onRegister={handleRegister} />
         </>} />
 
         <Route path="/login" render={() => <>
-          <h1 className="landing__title">the keymaker</h1>
-          <section className="landing__sion">
-            <img className="landing__image" src="https://res.cloudinary.com/dgsndtxtl/image/upload/v1568838146/logo-small_vcfw3z.png" />
-            <p className="landing__text">"you can save zion if you get to the source. for this you will need the Keymaker." the oracle - the matrix reloaded</p>
-          </section>
+          <Landing />
           <Login onBack={handleBack} onLogin={handleLogin} />
         </>} />
-
       </section>
 
       <Route path="/deployments" render={() => logic.isUserLogged() ? <Home onBack={handleBack} onLogout={handleLogout} /> : history.push('/')} />
