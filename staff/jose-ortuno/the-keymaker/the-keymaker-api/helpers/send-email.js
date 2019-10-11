@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 const moment = require('moment')
 
-const { env: { SMTP_USER, SMTP_PASS, SMTP_HOST, SMPT_PORT, SMTP_SECURE } } = process
+const { env: { SMTP_USER, SMTP_PASS, SMTP_HOST } } = process
 
 /************************************************************************
  * EMAIL INIT
